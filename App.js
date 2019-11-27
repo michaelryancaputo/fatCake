@@ -1,7 +1,12 @@
+import MapboxGL from '@react-native-mapbox-gl/maps'
 import { Platform } from 'react-native'
 import React from 'react'
 import firebase from '@react-native-firebase/app'
 import styled from 'styled-components/native'
+
+MapboxGL.setAccessToken(
+    'pk.eyJ1IjoibWljaGFlbHJ5YW5jYXB1dG8iLCJhIjoiY2szaGdpdTVuMGNmODNianEzbnJwem9rdiJ9.OWG-UtJHosonBwI8NOstgg'
+)
 
 const instructions = Platform.select({
     ios: 'Press Cmd+R to reload,\nCmd+D or shake for dev menu',
@@ -14,22 +19,11 @@ const firebaseCredentials = Platform.select({
     android: 'https://invertase.link/firebase-android',
 })
 
-export default class App extends React.Component {
-    render() {
-        return (
-            <Container>
-                <Welcome>HI to React Native + Firebase!</Welcome>
-                <Instructions>To get started, edit App.js</Instructions>
-                <Instructions>{instructions}</Instructions>
-                {!firebase.apps.length && (
-                    <Instructions>
-                        {`\nYou currently have no Firebase apps registered, this most likely means you've not downloaded your project credentials. Visit the link below to learn more. \n\n ${firebaseCredentials}`}
-                    </Instructions>
-                )}
-            </Container>
-        )
-    }
-}
+const MapContainer = styled.View`
+    height: 500;
+    width: 100%;
+    background-color: tomato;
+`
 
 const Container = styled.View`
     flex: 1;
@@ -39,7 +33,7 @@ const Container = styled.View`
 `
 
 const Welcome = styled.Text`
-    font-size: 20;
+    font-size: 30;
     text-align: center;
     margin-top: 10;
     margin-right: 10;
@@ -47,8 +41,19 @@ const Welcome = styled.Text`
     margin-left: 10;
 `
 
-const Instructions = styled.Text`
-    text-align: center;
-    color: #333;
-    margin-bottom: 5;
-`
+export default class App extends React.Component {
+    componentDidMount() {
+        MapboxGL.setTelemetryEnabled(false)
+    }
+
+    render() {
+        return (
+            <Container>
+                <Welcome>Hello Fatcake!</Welcome>
+                <MapContainer>
+                    <MapboxGL.MapView style={{ flex: 1 }} />
+                </MapContainer>
+            </Container>
+        )
+    }
+}
