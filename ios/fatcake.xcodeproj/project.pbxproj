@@ -18,6 +18,8 @@
 		2DCD954D1E0B4F2C00145EB5 /* fatcakeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* fatcakeTests.m */; };
 		308BA10DD81A4CD5773C5EF0 /* libPods-fatcakeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F97BABFB20A8D2D00FCEAF /* libPods-fatcakeTests.a */; };
 		368C8B75AF07590673F88796 /* libPods-fatcake.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B97223DB605A776B7873A159 /* libPods-fatcake.a */; };
+		840911F4238EC32600E5E6B0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 840911F3238EC32600E5E6B0 /* GoogleService-Info.plist */; };
+		840911F5238EC32600E5E6B0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 840911F3238EC32600E5E6B0 /* GoogleService-Info.plist */; };
 		9991177C8A0D568D67BBC309 /* libPods-fatcake-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C32AD33C0E655B4DC7285195 /* libPods-fatcake-tvOSTests.a */; };
 		9F64609C3E5320A5D10F8773 /* libPods-fatcake-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 720B61B4CE6CD926EA8253BD /* libPods-fatcake-tvOS.a */; };
 /* End PBXBuildFile section */
@@ -57,6 +59,7 @@
 		2D02E4901E0B4A5D006451C7 /* fatcake-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "fatcake-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FFC1B06272340C3C78D3810 /* Pods-fatcake-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fatcake-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-fatcake-tvOSTests/Pods-fatcake-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		720B61B4CE6CD926EA8253BD /* libPods-fatcake-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-fatcake-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		840911F3238EC32600E5E6B0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		98167CACE655EFFD9443CB85 /* Pods-fatcake.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fatcake.release.xcconfig"; path = "Target Support Files/Pods-fatcake/Pods-fatcake.release.xcconfig"; sourceTree = "<group>"; };
 		A259B2B51DAE525462BE979D /* Pods-fatcakeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fatcakeTests.release.xcconfig"; path = "Target Support Files/Pods-fatcakeTests/Pods-fatcakeTests.release.xcconfig"; sourceTree = "<group>"; };
 		B97223DB605A776B7873A159 /* libPods-fatcake.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-fatcake.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,6 +162,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				840911F3238EC32600E5E6B0 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* fatcake */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* fatcakeTests */,
@@ -194,7 +198,6 @@
 				E967DEB50AC91C1F6DB73035 /* Pods-fatcakeTests.debug.xcconfig */,
 				A259B2B51DAE525462BE979D /* Pods-fatcakeTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -309,6 +312,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -330,6 +334,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				840911F5238EC32600E5E6B0 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +344,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				840911F4238EC32600E5E6B0 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -646,7 +652,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.fatcake;
 				PRODUCT_NAME = fatcake;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -665,7 +671,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.fatcake;
 				PRODUCT_NAME = fatcake;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
