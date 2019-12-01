@@ -35,10 +35,10 @@ class ForgotPassword extends React.Component {
       <AppPageContainer heading="Forgot Password?">
         <Formik
           initialValues={{ email: '' }}
-          validationSchema={validationSchema}>
           onSubmit={(values, actions) => {
             this.handlePasswordReset(values, actions)
           }}
+          validationSchema={validationSchema}>
           {({
             handleChange,
             values,

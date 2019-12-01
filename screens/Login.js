@@ -1,16 +1,15 @@
 import * as Yup from 'yup'
 
-import React, { Component, Fragment } from 'react'
-import { SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
-// import AppLogo from '../components/AppLogo'
+import { AppPageContainer } from '../components';
 import { Button } from 'react-native-elements'
 import ErrorMessage from '../components/ErrorMessage'
 import FormButton from '../components/FormButton'
 import FormInput from '../components/FormInput'
 import { Formik } from 'formik'
-import { HideWithKeyboard } from 'react-native-hide-with-keyboard'
 import { Ionicons } from '@expo/vector-icons'
+import React from 'react'
 import { withFirebaseHOC } from '../config/Firebase'
 
 const validationSchema = Yup.object().shape({
@@ -24,7 +23,7 @@ const validationSchema = Yup.object().shape({
     .min(6, 'Password must have at least 6 characters ')
 })
 
-class Login extends Component {
+class Login extends React.Component {
   state = {
     passwordVisibility: true,
     rightIcon: 'ios-eye'
@@ -58,7 +57,7 @@ class Login extends Component {
   render() {
     const { passwordVisibility, rightIcon } = this.state
     return (
-      <SafeAreaView style={styles.container}>
+      <AppPageContainer heading="Login">
         <Formik
           initialValues={{ email: '', password: '' }}
           onSubmit={(values, actions) => {
@@ -75,7 +74,7 @@ class Login extends Component {
             handleBlur,
             isSubmitting
           }) => (
-              <Fragment>
+              <>
                 <FormInput
                   name='email'
                   value={values.email}
@@ -114,7 +113,7 @@ class Login extends Component {
                   />
                 </View>
                 <ErrorMessage errorValue={errors.general} />
-              </Fragment>
+              </>
             )}
         </Formik>
         <Button
@@ -133,21 +132,12 @@ class Login extends Component {
           }}
           type='clear'
         />
-      </SafeAreaView>
+      </AppPageContainer>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    marginTop: 50
-  },
-  logoContainer: {
-    marginBottom: 15,
-    alignItems: 'center'
-  },
   buttonContainer: {
     margin: 25
   }

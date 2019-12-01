@@ -6,12 +6,14 @@ import React from 'react';
 import TabBarIcon from '../components/TabBarIcon';
 
 const config = Platform.select({
-  default: { headerMode: 'none' },
+  default: {
+    headerMode: 'none'
+  },
 });
 
 const MapStack = createStackNavigator(
   {
-    Map,
+    screen: Map,
   },
   config
 );
@@ -34,7 +36,7 @@ MapStack.path = '';
 
 const LeaderboardStack = createStackNavigator(
   {
-    Leaderboard,
+    screen: Leaderboard,
   },
   config
 );
@@ -50,7 +52,7 @@ LeaderboardStack.path = '';
 
 const ProfileStack = createStackNavigator(
   {
-    Profile,
+    screen: Profile,
   },
   config
 );
