@@ -1,12 +1,13 @@
 import * as Yup from 'yup'
 
-import React, { Component, Fragment } from 'react'
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
+import { AppPageContainer } from '../components';
 import ErrorMessage from '../components/ErrorMessage'
 import FormButton from '../components/FormButton'
 import FormInput from '../components/FormInput'
 import { Formik } from 'formik'
+import React from 'react'
 import { withFirebaseHOC } from '../config/Firebase'
 
 const validationSchema = Yup.object().shape({
@@ -16,7 +17,7 @@ const validationSchema = Yup.object().shape({
     .required('Please enter a registered email')
 })
 
-class ForgotPassword extends Component {
+class ForgotPassword extends React.Component {
   handlePasswordReset = async (values, actions) => {
     const { email } = values;
 
@@ -31,14 +32,13 @@ class ForgotPassword extends Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.text}>Forgot Password?</Text>
+      <AppPageContainer heading="Forgot Password?">
         <Formik
           initialValues={{ email: '' }}
+          validationSchema={validationSchema}>
           onSubmit={(values, actions) => {
             this.handlePasswordReset(values, actions)
           }}
-          validationSchema={validationSchema}>
           {({
             handleChange,
             values,
@@ -49,7 +49,7 @@ class ForgotPassword extends Component {
             handleBlur,
             isSubmitting
           }) => (
-              <Fragment>
+              <>
                 <FormInput
                   name='email'
                   value={values.email}
@@ -71,25 +71,15 @@ class ForgotPassword extends Component {
                   />
                 </View>
                 <ErrorMessage errorValue={errors.general} />
-              </Fragment>
+              </>
             )}
         </Formik>
-      </SafeAreaView>
+      </AppPageContainer>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    marginTop: 150
-  },
-  text: {
-    color: '#333',
-    fontSize: 24,
-    marginLeft: 25
-  },
   buttonContainer: {
     margin: 25
   }

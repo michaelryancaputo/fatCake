@@ -7,9 +7,7 @@ import React from 'react'
 export default () => {
   return (
     <FirebaseProvider value={Firebase}>
-      <AppContainer>
-        <MainApp />
-      </AppContainer>
+      <MainApp />
     </FirebaseProvider>
   )
 }

@@ -6,8 +6,7 @@ import React from 'react';
 import TabBarIcon from '../components/TabBarIcon';
 
 const config = Platform.select({
-  web: { headerMode: 'screen' },
-  default: {},
+  default: { headerMode: 'none' },
 });
 
 const MapStack = createStackNavigator(
