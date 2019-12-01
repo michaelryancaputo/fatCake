@@ -1,8 +1,8 @@
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 
 import { Dimensions } from 'react-native';
+import MapButton from './MapButton';
 import React from 'react';
-import TouchableButton from './TouchableButton';
 import _ from 'lodash'
 import mapStyle from '../mapStyle.json';
 // import firebase from '@react-native-firebase/app'
@@ -38,7 +38,6 @@ class App extends React.Component {
   }
 
   onRegionChange(region) {
-
     this.setState({ region });
   }
 
@@ -71,7 +70,8 @@ class App extends React.Component {
             {this.props.children}
           </StyledMapView>
         </MapContainer>
-        <TouchableButton onPress={this.centerLocation}>Click</TouchableButton>
+        <MapButton background="pink" left onPress={this.centerLocation}>Check In</MapButton>
+        <MapButton background="orange" onPress={this.centerLocation}>Center</MapButton>
       </>
     )
   }

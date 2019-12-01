@@ -2,15 +2,19 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 const TouchableButton = styled.TouchableOpacity`
-  background: blue;
-  padding-top: 20;
-  padding-bottom: 20;
-  padding-left: 30;
-  padding-right: 30;
+  background: ${props => props.background ? props.background : 'pink'};
+  padding-top: 15;
+  padding-bottom: 15;
+  padding-left: 15;
+  padding-right: 15;
+  border-radius: 20;
 `;
 
 const TouchableText = styled.Text`
   color: white;
+  font-size: 12;
+  font-weight: bold;
+  text-align: center;
 `
 
 export default ({ children = 'Button', ...rest }) => <TouchableButton {...rest}>
