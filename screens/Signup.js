@@ -27,7 +27,6 @@ const validationSchema = Yup.object().shape({
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password')], 'Confirm Password must matched Password')
     .required('Confirm Password is required'),
-  check: Yup.boolean().oneOf([true], 'Please check the agreement')
 })
 
 class Signup extends Component {
@@ -171,16 +170,6 @@ class Signup extends Component {
                 />
                 <ErrorMessage
                   errorValue={touched.confirmPassword && errors.confirmPassword}
-                />
-                <CheckBox
-                  containerStyle={styles.checkBoxContainer}
-                  checkedIcon='check-box'
-                  iconType='material'
-                  uncheckedIcon='check-box-outline-blank'
-                  title='Agree to terms and conditions'
-                  checkedTitle='You agreed to our terms and conditions'
-                  checked={values.check}
-                  onPress={() => setFieldValue('check', !values.check)}
                 />
                 <View style={styles.buttonContainer}>
                   <FormButton
