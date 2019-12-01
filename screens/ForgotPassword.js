@@ -18,7 +18,7 @@ const validationSchema = Yup.object().shape({
 
 class ForgotPassword extends Component {
   handlePasswordReset = async (values, actions) => {
-    const { email } = values
+    const { email } = values;
 
     try {
       await this.props.firebase.passwordReset(email)
