@@ -6,8 +6,6 @@ import styled from 'styled-components/native';
 const AppContainer = styled.SafeAreaView`
     flex: 1;
     padding-top: ${Constants.statusBarHeight ? Constants.statusBarHeight : 20};
-    padding-left: 20;
-    padding-right: 20;
 `;
 
 export const AppPageContainer = props => {

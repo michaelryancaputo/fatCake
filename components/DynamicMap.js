@@ -1,6 +1,6 @@
+import { Alert, Dimensions } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 
-import { Dimensions } from 'react-native';
 import MapButton from './MapButton';
 import React from 'react';
 import _ from 'lodash'
@@ -34,23 +34,39 @@ class App extends React.Component {
 
     this.onRegionChange = this.onRegionChange.bind(this);
     this.onRegionChangeDelayed = _.debounce(this.onRegionChange, 2000)
-    this.centerLocation = this.centerLocation.bind(this);
+    this.onCenterLocation = this.onCenterLocation.bind(this);
+    this.onCheckIn = this.onCheckIn.bind(this);
+  }
+
+  onCheckIn() {
+    const { latitude, longitude } = this.props.location.coords;
+
+    Alert.alert(
+      'Check In',
+      `This will do something cool later.
+Latitude: ${latitude}
+Longitude: ${longitude}`,
+      { cancelable: true }
+    );
+
   }
 
   onRegionChange(region) {
     this.setState({ region });
   }
 
-  centerLocation() {
+  onCenterLocation() {
     const { latitude, longitude } = this.props.location.coords;
-    const { latitudeDelta, longitudeDelta } = this.state.region;
 
-    this.setState({
-      region: {
-        latitude,
-        longitude,
-        latitudeDelta,
-        longitudeDelta,
+    this.setState((state) => {
+      const { latitudeDelta, longitudeDelta } = state.region;
+      return {
+        region: {
+          latitude,
+          longitude,
+          latitudeDelta,
+          longitudeDelta,
+        }
       }
     });
   }
@@ -70,8 +86,8 @@ class App extends React.Component {
             {this.props.children}
           </StyledMapView>
         </MapContainer>
-        <MapButton background="pink" left onPress={this.centerLocation}>Check In</MapButton>
-        <MapButton background="orange" onPress={this.centerLocation}>Center</MapButton>
+        <MapButton background="pink" left onPress={this.onCheckIn}>Check In</MapButton>
+        <MapButton background="lightblue" onPress={this.onCenterLocation}>Center</MapButton>
       </>
     )
   }

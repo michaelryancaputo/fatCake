@@ -4,6 +4,7 @@ import { Button, CheckBox } from 'react-native-elements'
 import React, { Component, Fragment } from 'react'
 import { SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native'
 
+import { AppPageContainer } from '../components';
 import ErrorMessage from '../components/ErrorMessage'
 import FormButton from '../components/FormButton'
 import FormInput from '../components/FormInput'
@@ -29,7 +30,7 @@ const validationSchema = Yup.object().shape({
     .required('Confirm Password is required'),
 })
 
-class Signup extends Component {
+class Signup extends React.Component {
   state = {
     passwordVisibility: true,
     confirmPasswordVisibility: true,
@@ -86,7 +87,7 @@ class Signup extends Component {
       confirmPasswordIcon
     } = this.state
     return (
-      <SafeAreaView style={styles.container}>
+      <AppPageContainer heading="Sign Up">
         <Formik
           initialValues={{
             name: '',
@@ -110,7 +111,7 @@ class Signup extends Component {
             isSubmitting,
             setFieldValue
           }) => (
-              <Fragment>
+              <>
                 <FormInput
                   name='name'
                   value={values.name}
@@ -182,7 +183,7 @@ class Signup extends Component {
                   />
                 </View>
                 <ErrorMessage errorValue={errors.general} />
-              </Fragment>
+              </>
             )}
         </Formik>
         <Button
@@ -193,7 +194,7 @@ class Signup extends Component {
           }}
           type='clear'
         />
-      </SafeAreaView>
+      </AppPageContainer>
     )
   }
 }
