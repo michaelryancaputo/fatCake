@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+import { AppPageContainer } from '../components';
 import { Button } from 'react-native-elements'
 import { withFirebaseHOC } from '../config/Firebase'
 
@@ -9,20 +10,22 @@ class Home extends Component {
       await this.props.firebase.signOut()
       this.props.navigation.navigate('Auth')
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 
   render() {
     return (
-      <Button
-        title='Signout'
-        onPress={this.handleSignout}
-        titleStyle={{
-          color: '#F57C00'
-        }}
-        type='clear'
-      />
+      <AppPageContainer heading="Profile">
+        <Button
+          title='Signout'
+          onPress={this.handleSignout}
+          titleStyle={{
+            color: '#F57C00'
+          }}
+          type='clear'
+        />
+      </AppPageContainer>
     )
   }
 }

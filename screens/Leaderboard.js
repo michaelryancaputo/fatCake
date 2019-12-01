@@ -1,8 +1,4 @@
-import React from 'react'
-import styled from 'styled-components/native';
+import { AppPageContainer } from '../components';
+import React from 'react';
 
-const Login = styled.Text`
-color: pink;
-`;
-
-export default () => <Login>Leaderboard</Login>
+export default (props) => <AppPageContainer {...props} heading="Leaderboard" />
