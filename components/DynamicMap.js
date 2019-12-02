@@ -86,11 +86,18 @@ Longitude: ${longitude}`,
             {this.props.children}
           </StyledMapView>
         </MapContainer>
-        <MapButton background="pink" left onPress={this.onCheckIn}>Check In</MapButton>
-        <MapButton background="lightblue" onPress={this.onCenterLocation}>Center</MapButton>
+        {this.props.location && <>
+          <MapButton background="pink" left onPress={this.onCheckIn}>Check In</MapButton>
+          <MapButton background="lightblue" onPress={this.onCenterLocation}>Center</MapButton>
+        </>
+        }
       </>
     )
   }
+}
+
+App.defaultProps = {
+  location: undefined
 }
 
 export default App;

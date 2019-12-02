@@ -1,19 +1,19 @@
 import * as Yup from 'yup'
 
-import { Button, CheckBox } from 'react-native-elements'
-import React, { Component, Fragment } from 'react'
-import { SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
 import { AppPageContainer } from '../components';
+import { Button } from 'react-native-elements'
 import ErrorMessage from '../components/ErrorMessage'
 import FormButton from '../components/FormButton'
 import FormInput from '../components/FormInput'
 import { Formik } from 'formik'
 import { Ionicons } from '@expo/vector-icons'
+import React from 'react'
 import { withFirebaseHOC } from '../config/Firebase'
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string()
+  displayName: Yup.string()
     .label('Name')
     .required()
     .min(2, 'Must have at least 2 characters'),
@@ -57,7 +57,7 @@ class Signup extends React.Component {
   }
 
   handleOnSignup = async (values, actions) => {
-    const { name, email, password } = values
+    const { displayName, email, password } = values
 
     try {
       const response = await this.props.firebase.signupWithEmail(
@@ -67,8 +67,8 @@ class Signup extends React.Component {
 
       if (response.user.uid) {
         const { uid } = response.user
-        const userData = { email, name, uid }
-        await this.props.firebase.createNewUser(userData)
+        await this.props.firebase.createNewUser({ email, displayName, uid })
+        await this.props.firebase.updateUser({ displayName })
         this.props.navigation.navigate('App')
       }
     } catch (error) {
@@ -90,15 +90,12 @@ class Signup extends React.Component {
       <AppPageContainer heading="Sign Up">
         <Formik
           initialValues={{
-            name: '',
+            displayName: '',
             email: '',
             password: '',
             confirmPassword: '',
-            check: false
           }}
-          onSubmit={(values, actions) => {
-            this.handleOnSignup(values, actions)
-          }}
+          onSubmit={(values, actions) => this.handleOnSignup(values, actions)}
           validationSchema={validationSchema}>
           {({
             handleChange,
@@ -113,15 +110,15 @@ class Signup extends React.Component {
           }) => (
               <>
                 <FormInput
-                  name='name'
-                  value={values.name}
-                  onChangeText={handleChange('name')}
+                  name='displayName'
+                  value={values.displayName}
+                  onChangeText={handleChange('displayName')}
                   placeholder='Enter your full name'
                   iconName='md-person'
                   iconColor='#2C384A'
-                  onBlur={handleBlur('name')}
+                  onBlur={handleBlur('displayName')}
                 />
-                <ErrorMessage errorValue={touched.name && errors.name} />
+                <ErrorMessage errorValue={touched.displayName && errors.displayName} />
                 <FormInput
                   name='email'
                   value={values.email}
@@ -200,22 +197,9 @@ class Signup extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    marginTop: 50
-  },
-  logoContainer: {
-    marginBottom: 15,
-    alignItems: 'center'
-  },
   buttonContainer: {
     margin: 25
   },
-  checkBoxContainer: {
-    backgroundColor: '#fff',
-    borderColor: '#fff'
-  }
 })
 
 export default withFirebaseHOC(Signup)
