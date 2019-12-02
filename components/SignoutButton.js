@@ -1,5 +1,6 @@
+import * as React from 'react'
+
 import { Button } from 'react-native-elements'
-import React from 'react'
 import { withFirebaseHOC } from '../config/Firebase'
 
 class SignoutButton extends React.Component {

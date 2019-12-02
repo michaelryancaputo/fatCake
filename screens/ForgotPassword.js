@@ -1,3 +1,4 @@
+import * as React from 'react'
 import * as Yup from 'yup'
 
 import { StyleSheet, View } from 'react-native'
@@ -7,7 +8,6 @@ import ErrorMessage from '../components/ErrorMessage'
 import FormButton from '../components/FormButton'
 import FormInput from '../components/FormInput'
 import { Formik } from 'formik'
-import React from 'react'
 import { withFirebaseHOC } from '../config/Firebase'
 
 const validationSchema = Yup.object().shape({

@@ -1,8 +1,9 @@
+import * as React from 'react';
+
 import { Alert, Dimensions } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 
 import MapButton from './MapButton';
-import React from 'react';
 import _ from 'lodash'
 import mapStyle from '../mapStyle.json';
 // import firebase from '@react-native-firebase/app'

@@ -1,9 +1,9 @@
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
+import * as React from 'react';
 
 import { DynamicMap } from '../components';
 import MapView from 'react-native-maps'
-import React from 'react';
 
 class Map extends React.Component {
   state = {
