@@ -4,11 +4,7 @@
     "slug": "fatcake",
     "privacy": "public",
     "sdkVersion": "35.0.0",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "platforms": ["ios"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -20,11 +16,10 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true,
+      "bundleIdentifier": "com.fatcake.leaderboard",
+      "supportsTablet": false,
       "config": {
         "googleMapsApiKey": "AIzaSyB3b9oYalGVbhBrIAbNJ-vZ8YqSQ5m-ydI"
       }

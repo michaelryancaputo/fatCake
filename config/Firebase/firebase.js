@@ -8,32 +8,48 @@ import firebaseConfig from './firebaseConfig'
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig)
 
+const Auth = firebase.auth();
+
 const Firebase = {
+  general: () => {
+    console.log(Auth);
+  },
   // auth
   loginWithEmail: (email, password) => {
-    return firebase.auth().signInWithEmailAndPassword(email, password)
+    return Auth.signInWithEmailAndPassword(email, password)
   },
   signupWithEmail: (email, password) => {
-    return firebase.auth().createUserWithEmailAndPassword(email, password)
+    return Auth.createUserWithEmailAndPassword(email, password)
   },
   signOut: () => {
-    return firebase.auth().signOut()
+    return Auth.signOut()
   },
   checkUserAuth: user => {
-    return firebase.auth().onAuthStateChanged(user)
+    return Auth.onAuthStateChanged(user)
   },
   passwordReset: email => {
-    return firebase.auth().sendPasswordResetEmail(email);
+    return Auth.sendPasswordResetEmail(email);
+  },
+  getCurrenUser: () => {
+    return Auth.currentUser;
   },
 
-  // firestore
+  updateUser: (options) => {
+    return Auth.currentUser.updateProfile(options);
+  },
+
+  deleteUser: () => {
+    return Auth.currentUser.delete()
+  },
+
   createNewUser: userData => {
     return firebase
       .firestore()
       .collection('users')
       .doc(`${userData.uid}`)
       .set(userData)
-  }
+  },
+
 }
 
-export default Firebase
+export default Firebase;
