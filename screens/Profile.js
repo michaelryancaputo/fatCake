@@ -1,4 +1,6 @@
+import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
+import * as React from 'react';
 import * as Yup from 'yup'
 
 import { AppPageContainer, SignoutButton } from '../components';
@@ -9,8 +11,6 @@ import ErrorMessage from '../components/ErrorMessage'
 import FormButton from '../components/FormButton'
 import FormInput from '../components/FormInput'
 import { Formik } from 'formik'
-import ImagePicker from 'expo-image-picker';
-import React from 'react'
 import { withFirebaseHOC } from '../config/Firebase'
 
 const validationSchema = Yup.object().shape({
@@ -43,9 +43,9 @@ class Profile extends React.Component {
       }
 
       let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        mediaTypes: 'Images',
         allowsEditing: true,
-        aspect: [4, 3],
+        aspect: [1, 1],
         quality: 1
       });
 

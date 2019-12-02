@@ -1,6 +1,7 @@
+import * as React from 'react';
+
 import Constants from 'expo-constants';
 import Heading from './Heading';
-import React from 'react';
 import styled from 'styled-components/native';
 
 const AppContainer = styled.SafeAreaView`

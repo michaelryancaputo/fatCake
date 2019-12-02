@@ -1,3 +1,4 @@
+import * as React from 'react'
 import * as Yup from 'yup'
 
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
@@ -9,7 +10,6 @@ import FormButton from '../components/FormButton'
 import FormInput from '../components/FormInput'
 import { Formik } from 'formik'
 import { Ionicons } from '@expo/vector-icons'
-import React from 'react'
 import { withFirebaseHOC } from '../config/Firebase'
 
 const validationSchema = Yup.object().shape({
