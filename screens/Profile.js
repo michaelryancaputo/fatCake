@@ -1,12 +1,15 @@
+import * as Permissions from 'expo-permissions';
 import * as Yup from 'yup'
 
 import { AppPageContainer, SignoutButton } from '../components';
 import { Text, View } from 'react-native'
 
+import Constants from 'expo-constants';
 import ErrorMessage from '../components/ErrorMessage'
 import FormButton from '../components/FormButton'
 import FormInput from '../components/FormInput'
 import { Formik } from 'formik'
+import ImagePicker from 'expo-image-picker';
 import React from 'react'
 import { withFirebaseHOC } from '../config/Firebase'
 
@@ -32,6 +35,29 @@ class Profile extends React.Component {
     }
   }
 
+  _pickImage = async (handleChange) => {
+    if (Constants.platform.ios) {
+      const permission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (permission.status !== 'granted') {
+        return alert('Sorry, we need camera roll permissions to make this work!');
+      }
+
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1
+      });
+
+      console.log(result);
+
+      if (!result.cancelled) {
+        handleChange(result.uri)
+      }
+    }
+
+  };
+
   handleDelete = async () => {
     this.props.firebase.deleteUser(this.state.uid).then(() => {
       this.props.navigation.navigate('App')
@@ -43,12 +69,9 @@ class Profile extends React.Component {
 
   componentDidMount() {
     const userData = this.props.firebase.getCurrenUser();
-    console.log(userData.providerData[0])
     this.setState({
       uid: userData.uid,
-      userData: {
-        ...userData.providerData[0]
-      }
+      userData: userData.providerData[0]
     })
   }
 
@@ -96,6 +119,9 @@ class Profile extends React.Component {
                   iconColor='#2C384A'
                   onBlur={handleBlur('displayName')}
                 />
+                <FormButton
+                  onPress={() => this._pickImage(handleChange('image'))}
+                  title="Pick an image from camera roll" />
                 <ErrorMessage errorValue={touched.displayName && errors.displayName} />
                 <FormInput
                   name='email'
