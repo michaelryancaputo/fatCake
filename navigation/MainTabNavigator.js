@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Leaderboard, Map, Profile } from '../screens';
+import { Feed, Leaderboard, Map, Profile } from '../screens';
 
 import { Platform } from 'react-native';
 import TabBarIcon from '../components/TabBarIcon';
@@ -52,6 +52,23 @@ LeaderboardStack.navigationOptions = {
 
 LeaderboardStack.path = '';
 
+
+const FeedStack = createStackNavigator(
+  {
+    screen: Feed,
+  },
+  config
+);
+
+FeedStack.navigationOptions = {
+  tabBarLabel: 'Feed',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon focused={focused} name="ios-camera" />
+  ),
+};
+
+FeedStack.path = '';
+
 const ProfileStack = createStackNavigator(
   {
     screen: Profile,
@@ -70,6 +87,7 @@ ProfileStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
   MapStack,
+  FeedStack,
   LeaderboardStack,
   ProfileStack,
 });
