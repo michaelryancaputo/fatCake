@@ -1,10 +1,11 @@
 import * as React from 'react';
 
 import { Leaderboard, Map, Profile } from '../screens';
-import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 
 import { Platform } from 'react-native';
 import TabBarIcon from '../components/TabBarIcon';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createStackNavigator } from 'react-navigation-stack'
 
 const config = Platform.select({
   default: {

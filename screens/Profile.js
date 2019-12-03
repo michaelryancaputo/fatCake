@@ -11,6 +11,7 @@ import ErrorMessage from '../components/ErrorMessage'
 import FormButton from '../components/FormButton'
 import FormInput from '../components/FormInput'
 import { Formik } from 'formik'
+import HeaderButtons from 'react-navigation-header-buttons';
 import { withFirebaseHOC } from '../config/Firebase'
 
 const validationSchema = Yup.object().shape({
@@ -52,7 +53,10 @@ class Profile extends React.Component {
       console.log(result);
 
       if (!result.cancelled) {
-        handleChange(result.uri)
+        const firebaseResponse = this.props.firebase.uploadImage(result.uri);
+        console.log(firebaseResponse);
+
+        // handleChange(result.uri)
       }
     }
 
@@ -63,12 +67,12 @@ class Profile extends React.Component {
       this.props.navigation.navigate('App')
     }).catch(() => {
       actions.setFieldError('general', 'There was a problem deleting your account.')
-
     })
   }
 
   componentDidMount() {
     const userData = this.props.firebase.getCurrenUser();
+    console.log(userData)
     this.setState({
       uid: userData.uid,
       userData: userData.providerData[0]
