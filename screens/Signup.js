@@ -6,11 +6,11 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { AppPageContainer } from '../components';
 import { Button } from 'react-native-elements'
 import ErrorMessage from '../components/ErrorMessage'
+import Firebase from '../config/Firebase'
 import FormButton from '../components/FormButton'
 import FormInput from '../components/FormInput'
 import { Formik } from 'formik'
 import { Ionicons } from '@expo/vector-icons'
-import { withFirebaseHOC } from '../config/Firebase'
 
 const validationSchema = Yup.object().shape({
   displayName: Yup.string()
@@ -60,15 +60,15 @@ class Signup extends React.Component {
     const { displayName, email, password } = values
 
     try {
-      const response = await this.props.firebase.signupWithEmail(
+      const response = await Firebase.shared.signupWithEmail(
         email,
         password
       )
 
       if (response.user.uid) {
         const { uid } = response.user
-        await this.props.firebase.createNewUser({ email, displayName, uid })
-        await this.props.firebase.updateUser({ displayName })
+        await Firebase.shared.createNewUser({ email, displayName, uid })
+        await Firebase.shared.updateUser({ displayName })
         this.props.navigation.navigate('App')
       }
     } catch (error) {
@@ -202,4 +202,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default withFirebaseHOC(Signup)
+export default Signup;

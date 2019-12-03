@@ -6,11 +6,11 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { AppPageContainer } from '../components';
 import { Button } from 'react-native-elements'
 import ErrorMessage from '../components/ErrorMessage'
+import Firebase from '../config/Firebase'
 import FormButton from '../components/FormButton'
 import FormInput from '../components/FormInput'
 import { Formik } from 'formik'
 import { Ionicons } from '@expo/vector-icons'
-import { withFirebaseHOC } from '../config/Firebase'
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -42,7 +42,7 @@ class Login extends React.Component {
   handleOnLogin = async (values, actions) => {
     const { email, password } = values
     try {
-      const response = await this.props.firebase.loginWithEmail(email, password)
+      const response = await Firebase.shared.loginWithEmail(email, password)
 
       if (response.user) {
         this.props.navigation.navigate('App')
@@ -143,4 +143,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default withFirebaseHOC(Login)
+export default Login;

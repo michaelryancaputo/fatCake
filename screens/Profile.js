@@ -8,11 +8,11 @@ import { Text, View } from 'react-native'
 
 import Constants from 'expo-constants';
 import ErrorMessage from '../components/ErrorMessage'
+import Firebase from '../config/Firebase'
 import FormButton from '../components/FormButton'
 import FormInput from '../components/FormInput'
 import { Formik } from 'formik'
 import HeaderButtons from 'react-navigation-header-buttons';
-import { withFirebaseHOC } from '../config/Firebase'
 
 const validationSchema = Yup.object().shape({
   displayName: Yup.string()
@@ -53,17 +53,16 @@ class Profile extends React.Component {
       console.log(result);
 
       if (!result.cancelled) {
-        const firebaseResponse = this.props.firebase.uploadImage(result.uri);
+        const firebaseResponse = Firebase.shared.uploadImage(result.uri);
         console.log(firebaseResponse);
 
-        // handleChange(result.uri)
       }
     }
 
   };
 
   handleDelete = async () => {
-    this.props.firebase.deleteUser(this.state.uid).then(() => {
+    Firebase.shared.deleteUser(this.state.uid).then(() => {
       this.props.navigation.navigate('App')
     }).catch(() => {
       actions.setFieldError('general', 'There was a problem deleting your account.')
@@ -71,7 +70,7 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    const userData = this.props.firebase.getCurrenUser();
+    const userData = Firebase.shared.getCurrentUser();
     console.log(userData)
     this.setState({
       uid: userData.uid,
@@ -83,7 +82,7 @@ class Profile extends React.Component {
     const { displayName, email, phoneNumber, photoURL } = values;
     try {
       const options = { displayName, email, phoneNumber, photoURL }
-      await this.props.firebase.updateUser(options)
+      await Firebase.shared.updateUser(options)
     } catch (error) {
       actions.setFieldError('general', error.message)
     } finally {
@@ -166,5 +165,5 @@ class Profile extends React.Component {
   }
 }
 
-export default withFirebaseHOC(Profile)
+export default Profile
 

@@ -5,10 +5,10 @@ import { StyleSheet, View } from 'react-native'
 
 import { AppPageContainer } from '../components';
 import ErrorMessage from '../components/ErrorMessage'
+import Firebase from '../config/Firebase'
 import FormButton from '../components/FormButton'
 import FormInput from '../components/FormInput'
 import { Formik } from 'formik'
-import { withFirebaseHOC } from '../config/Firebase'
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -22,7 +22,7 @@ class ForgotPassword extends React.Component {
     const { email } = values;
 
     try {
-      await this.props.firebase.passwordReset(email)
+      await Firebase.shared.passwordReset(email)
       console.log('Password reset email sent successfully')
       this.props.navigation.navigate('Login')
     } catch (error) {
@@ -85,4 +85,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default withFirebaseHOC(ForgotPassword)
+export default ForgotPassword;

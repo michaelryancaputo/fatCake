@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { Button } from 'react-native-elements'
 
-const FormButton = ({ title, buttonType, buttonColor, ...rest }) => (
+const FormButton = ({ title = 'Click', buttonType = 'outline', buttonColor = '#039BE5', ...rest }) => (
   <Button
     {...rest}
     type={buttonType}

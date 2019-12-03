@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 
 import { AppLoading } from 'expo'
 import { Asset } from 'expo-asset'
-import { withFirebaseHOC } from '../config/Firebase'
+import Firebase from '../config/Firebase'
 
 class Initial extends Component {
   state = {
@@ -17,7 +17,7 @@ class Initial extends Component {
       // previously
       this.loadLocalAsync()
 
-      await this.props.firebase.checkUserAuth(user => {
+      await Firebase.shared.checkUserAuth(user => {
         if (user) {
           // if the user has previously logged in
           this.props.navigation.navigate('App')
@@ -63,4 +63,4 @@ class Initial extends Component {
   }
 }
 
-export default withFirebaseHOC(Initial)
+export default Initial;

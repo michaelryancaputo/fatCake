@@ -1,12 +1,16 @@
+import * as ImagePicker from "expo-image-picker";
+import * as Permissions from "expo-permissions";
 import * as React from 'react';
 
 import { Alert, Dimensions } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 
+import AddPhotoModal from './AddPhotoModal';
+import Constants from 'expo-constants'
 import MapButton from './MapButton';
-import _ from 'lodash'
+import _ from 'lodash';
+import { getPermission } from "../utils";
 import mapStyle from '../mapStyle.json';
-// import firebase from '@react-native-firebase/app'
 import styled from 'styled-components/native';
 
 const StyledMapView = styled(MapView)`
@@ -18,13 +22,18 @@ const MapContainer = styled.View`
     height: 200;
     width: 100%;
     background-color: tomato;
-`
+`;
 
-class App extends React.Component {
+const options = {
+  allowsEditing: true
+};
+
+class DynamicMap extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      addPhotoModalVisible: false,
       region: {
         latitude: 37.78825,
         longitude: -122.4324,
@@ -37,6 +46,8 @@ class App extends React.Component {
     this.onRegionChangeDelayed = _.debounce(this.onRegionChange, 2000)
     this.onCenterLocation = this.onCenterLocation.bind(this);
     this.onCheckIn = this.onCheckIn.bind(this);
+    this.addPhoto = this.addPhoto.bind(this);
+    this.setModalVisible = this.setModalVisible.bind(this);
   }
 
   onCheckIn() {
@@ -72,9 +83,30 @@ Longitude: ${longitude}`,
     });
   }
 
+  addPhoto = async () => {
+    const permissionType = Constants.isDevice ? Permissions.CAMERA_ROLL : Permissions.CAMERA;
+    const imageMethod = Constants.isDevice ? 'launchCameraAsync' : 'launchImageLibraryAsync';
+    const status = await getPermission(permissionType);
+
+    if (status) {
+      const result = await ImagePicker[imageMethod](options);
+
+      if (!result.cancelled) {
+        this.setModalVisible(true, { newImageUri: result.uri })
+        // this.props.navigation.navigate("NewPost", { image: result.uri });
+      }
+    }
+  }
+
+
+  setModalVisible = (visible, options = {}) => {
+    this.setState({ addPhotoModalVisible: visible, ...options });
+  }
+
   render() {
     return (
       <>
+        <AddPhotoModal addPhotoModalVisible={this.state.addPhotoModalVisible} newImageUri={this.state.newImageUri} setModalVisible={this.setModalVisible} />
         <MapContainer>
           <StyledMapView
             provider={undefined}
@@ -88,7 +120,7 @@ Longitude: ${longitude}`,
           </StyledMapView>
         </MapContainer>
         {this.props.location && <>
-          <MapButton background="pink" left onPress={this.onCheckIn}>Check In</MapButton>
+          <MapButton background="pink" left onPress={this.addPhoto}>Photo</MapButton>
           <MapButton background="lightblue" onPress={this.onCenterLocation}>Center</MapButton>
         </>
         }
@@ -97,8 +129,8 @@ Longitude: ${longitude}`,
   }
 }
 
-App.defaultProps = {
+DynamicMap.defaultProps = {
   location: undefined
 }
 
-export default App;
+export default DynamicMap;

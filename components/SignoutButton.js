@@ -1,12 +1,12 @@
 import * as React from 'react'
 
 import { Button } from 'react-native-elements'
-import { withFirebaseHOC } from '../config/Firebase'
+import Firebase from '../config/Firebase'
 
 class SignoutButton extends React.Component {
   handleSignout = async () => {
     try {
-      await this.props.firebase.signOut()
+      await Firebase.shared.signOut()
       this.props.navigation.navigate('Auth')
     } catch (error) {
       console.error(error)
@@ -26,5 +26,5 @@ class SignoutButton extends React.Component {
   }
 }
 
-export default withFirebaseHOC(SignoutButton)
+export default SignoutButton;
 
