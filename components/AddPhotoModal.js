@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Image, Modal, TextInput } from 'react-native';
+import { Image, KeyboardAvoidingView, Modal, TextInput } from 'react-native';
 
 import { AppPageContainer } from './AppContainer';
 import Firebase from '../config/Firebase';
@@ -50,8 +50,10 @@ class AddPhotoModal extends React.Component {
           placeholder="Add a neat description..."
           onChangeText={text => this.setState({ text })}
         />
-        <FormButton onPress={this.onSave} title="Save" />
-        <FormButton onPress={this.closeModal} title="Close" />
+        <KeyboardAvoidingView behavior="padding" enabled>
+          <FormButton onPress={this.onSave} title="Save" />
+          <FormButton onPress={this.closeModal} title="Close" />
+        </KeyboardAvoidingView>
       </AppPageContainer>
     </Modal>
   }

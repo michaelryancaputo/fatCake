@@ -84,22 +84,25 @@ Longitude: ${longitude}`,
   }
 
   addPhoto = async () => {
-    const permissionType = Constants.isDevice ? Permissions.CAMERA_ROLL : Permissions.CAMERA;
-    const imageMethod = Constants.isDevice ? 'launchCameraAsync' : 'launchImageLibraryAsync';
+    const permissionType = Constants.isDevice ? Permissions.CAMERA : Permissions.CAMERA_ROLL;
     const status = await getPermission(permissionType);
 
     if (status) {
-      const result = await ImagePicker[imageMethod](options);
+      const result = Constants.isDevice ?
+        await ImagePicker.launchCameraAsync(options) :
+        await ImagePicker.launchImageLibraryAsync(options);
 
       if (!result.cancelled) {
         this.setModalVisible(true, { newImageUri: result.uri })
-        // this.props.navigation.navigate("NewPost", { image: result.uri });
       }
     }
   }
 
 
   setModalVisible = (visible, options = {}) => {
+    if (!visible) {
+      options['newImageUri'] = undefined;
+    }
     this.setState({ addPhotoModalVisible: visible, ...options });
   }
 
