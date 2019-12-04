@@ -41,7 +41,7 @@ class FeedScreen extends React.Component {
     this.setState({ loading: true });
 
     // The data prop will be an array of posts, the cursor will be used for pagination.
-    const { data, cursor } = await Firebase.shared.getPaged({
+    const { data, cursor } = await Firebase.shared.getPaged('eventCollection', {
       size: PAGE_SIZE,
       start: lastKey
     });

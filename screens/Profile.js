@@ -12,7 +12,11 @@ import Firebase from '../config/Firebase'
 import FormButton from '../components/FormButton'
 import FormInput from '../components/FormInput'
 import { Formik } from 'formik'
-import HeaderButtons from 'react-navigation-header-buttons';
+import { getPermission } from "../utils";
+
+const options = {
+  allowsEditing: true
+};
 
 const validationSchema = Yup.object().shape({
   displayName: Yup.string()
@@ -28,6 +32,7 @@ const validationSchema = Yup.object().shape({
 class Profile extends React.Component {
   state = {
     uid: undefined,
+    loading: false,
     userData: {
       displayName: undefined,
       email: undefined,
@@ -36,30 +41,22 @@ class Profile extends React.Component {
     }
   }
 
-  _pickImage = async (handleChange) => {
-    if (Constants.platform.ios) {
-      const permission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-      if (permission.status !== 'granted') {
-        return alert('Sorry, we need camera roll permissions to make this work!');
-      }
+  pickImage = async () => {
+    const permissionType = Constants.isDevice ? Permissions.CAMERA : Permissions.CAMERA_ROLL;
+    const status = await getPermission(permissionType);
 
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: 'Images',
-        allowsEditing: true,
-        aspect: [1, 1],
-        quality: 1
-      });
+    if (status) {
+      const result = Constants.isDevice ?
+        await ImagePicker.launchCameraAsync(options) :
+        await ImagePicker.launchImageLibraryAsync(options);
 
-      console.log(result);
+      console.log(result)
 
       if (!result.cancelled) {
-        const firebaseResponse = Firebase.shared.uploadImage(result.uri);
-        console.log(firebaseResponse);
-
+        Firebase.shared.postUserPhoto(`${result.uri}`)
       }
     }
-
-  };
+  }
 
   handleDelete = async () => {
     Firebase.shared.deleteUser(this.state.uid).then(() => {
@@ -71,7 +68,6 @@ class Profile extends React.Component {
 
   componentDidMount() {
     const userData = Firebase.shared.getCurrentUser();
-    console.log(userData)
     this.setState({
       uid: userData.uid,
       userData: userData.providerData[0]
@@ -123,7 +119,7 @@ class Profile extends React.Component {
                   onBlur={handleBlur('displayName')}
                 />
                 <FormButton
-                  onPress={() => this._pickImage(handleChange('image'))}
+                  onPress={this.pickImage}
                   title="Pick an image from camera roll" />
                 <ErrorMessage errorValue={touched.displayName && errors.displayName} />
                 <FormInput

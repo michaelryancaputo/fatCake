@@ -1,13 +1,12 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 
-import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 
-const profileImageSize = 36;
-const padding = 12;
-
 class ListItem extends React.Component {
-  state = {};
+  state = {
+    width: undefined,
+    height: undefined,
+  };
 
   componentDidMount() {
     if (!this.props.imageWidth) {
@@ -19,7 +18,7 @@ class ListItem extends React.Component {
   }
 
   render() {
-    const { text, name, imageWidth, imageHeight, uid, image } = this.props;
+    const { text, name, imageWidth, imageHeight, uid, image, user } = this.props;
 
     // Reduce the name to something
     const imgW = imageWidth || this.state.width;
@@ -28,7 +27,6 @@ class ListItem extends React.Component {
 
     return (
       <View>
-        {/* <Header image={{ uri: image }} name={name} /> */}
         <Image
           resizeMode="contain"
           style={{
@@ -38,69 +36,21 @@ class ListItem extends React.Component {
           }}
           source={{ uri: image }}
         />
-        <Metadata name={name} description={text} />
+        <View style={{ padding: 12 }}>
+          <Text style={styles.text}>{user.displayName || name}</Text>
+          <Text style={styles.subtitle}>{text}</Text>
+        </View>
       </View>
     );
   }
 }
 
-const Metadata = ({ name, description }) => (
-  <View style={styles.padding}>
-    {/* <IconBar /> */}
-    <Text style={styles.text}>{name}</Text>
-    <Text style={styles.subtitle}>{description}</Text>
-  </View>
-);
-
-const Header = ({ name, image }) => (
-  <View style={[styles.row, styles.padding]}>
-    <View style={styles.row}>
-      <Image style={styles.avatar} source={image} />
-      <Text style={styles.text}>{name}</Text>
-    </View>
-    <Icon name="ios-more" />
-  </View>
-);
-
-const Icon = ({ name }) => (
-  <Ionicons style={{ marginRight: 8 }} name={name} size={26} color="black" />
-);
-
-const IconBar = () => (
-  <View style={styles.row}>
-    <View style={styles.row}>
-      <Icon name="ios-heart-empty" />
-      <Icon name="ios-chatbubbles" />
-      <Icon name="ios-send" />
-    </View>
-    <Icon name="ios-bookmark" />
-  </View>
-);
 
 const styles = StyleSheet.create({
   text: { fontWeight: "600" },
   subtitle: {
     opacity: 0.8
   },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-  padding: {
-    padding
-  },
-  avatar: {
-    aspectRatio: 1,
-    backgroundColor: "#D8D8D8",
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "#979797",
-    borderRadius: profileImageSize / 2,
-    width: profileImageSize,
-    height: profileImageSize,
-    resizeMode: "cover",
-    marginRight: padding
-  }
 });
 
 

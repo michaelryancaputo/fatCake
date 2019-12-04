@@ -2,11 +2,11 @@ import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
 import * as React from 'react';
 
-import { Alert, Dimensions } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 
 import AddPhotoModal from './AddPhotoModal';
 import Constants from 'expo-constants'
+import { Dimensions } from 'react-native';
 import MapButton from './MapButton';
 import _ from 'lodash';
 import { getPermission } from "../utils";
@@ -45,22 +45,8 @@ class DynamicMap extends React.Component {
     this.onRegionChange = this.onRegionChange.bind(this);
     this.onRegionChangeDelayed = _.debounce(this.onRegionChange, 2000)
     this.onCenterLocation = this.onCenterLocation.bind(this);
-    this.onCheckIn = this.onCheckIn.bind(this);
     this.addPhoto = this.addPhoto.bind(this);
     this.setModalVisible = this.setModalVisible.bind(this);
-  }
-
-  onCheckIn() {
-    const { latitude, longitude } = this.props.location.coords;
-
-    Alert.alert(
-      'Check In',
-      `This will do something cool later.
-Latitude: ${latitude}
-Longitude: ${longitude}`,
-      { cancelable: true }
-    );
-
   }
 
   onRegionChange(region) {
@@ -109,7 +95,12 @@ Longitude: ${longitude}`,
   render() {
     return (
       <>
-        <AddPhotoModal addPhotoModalVisible={this.state.addPhotoModalVisible} newImageUri={this.state.newImageUri} setModalVisible={this.setModalVisible} />
+        <AddPhotoModal
+          addPhotoModalVisible={this.state.addPhotoModalVisible}
+          newImageUri={this.state.newImageUri}
+          setModalVisible={this.setModalVisible}
+          location={this.props.location}
+        />
         <MapContainer>
           <StyledMapView
             provider={undefined}

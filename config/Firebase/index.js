@@ -3,94 +3,104 @@ import 'firebase/firestore';
 
 import * as firebase from 'firebase';
 
-import { getUserInfo, reduceImageAsync, uploadPhoto } from '../../utils';
+import { reduceImageAsync, uploadPhoto } from '../../utils';
 
 import firebaseConfig from './firebaseConfig';
 import uuid from 'uuid';
 
-const collectionName = 'event-photos';
+const eventCollectionName = 'event-photos';
+const profileCollectionName = 'profile-photos';
 
 class Fire {
   constructor() {
     firebase.initializeApp(firebaseConfig);
-    // // Listen for auth
-    // firebase.auth().onAuthStateChanged(async user => {
-    //   if (!user) {
-    //     await firebase.auth().signInAnonymously();
-    //   }
-    // });
   }
 
   // Download Data
-  getPaged = async ({ size, start }) => {
-    let ref = this.collection.orderBy('timestamp', 'desc').limit(size);
+  getPaged = async (collectionName, { size, start }, self = false) => {
+    let ref = this[collectionName].orderBy('timestamp', 'desc').limit(size);
     try {
       if (start) {
         ref = ref.startAfter(start);
       }
 
+      if (self) {
+        console.error('this is where we would modify the query to get images uploaded by self')
+      }
+
       const querySnapshot = await ref.get();
       const data = [];
-      querySnapshot.forEach(function (doc) {
+
+      querySnapshot.forEach((doc) => {
         if (doc.exists) {
           const post = doc.data() || {};
-
-          // Reduce the name
-          const user = post.user || {};
-
-          const name = user.deviceName;
           const reduced = {
             key: doc.id,
-            name: (name || 'Secret Duck').trim(),
             ...post,
           };
+
           data.push(reduced);
         }
       });
 
-      const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-      return { data, cursor: lastVisible };
+      const cursor = querySnapshot.docs[querySnapshot.docs.length - 1];
+      return { data, cursor };
+
     } catch ({ message }) {
       alert(message);
     }
   };
 
   // Upload Data
-  uploadPhotoAsync = async uri => {
-    const path = `${collectionName}/${this.uid}/${uuid.v4()}.jpg`;
-    console.log(`uploadPhotoAsync ${uri} ${path}`);
-    return uploadPhoto(uri, path);
-  };
+  uploadPhotoAsync = async (uri, collectionName) =>
+    uploadPhoto(uri, `${collectionName}/${this.uid}/${uuid.v4()}.jpg`);
 
-  post = async ({ text, image: localUri }) => {
-    console.log('before try')
+  postUserPhoto = async ({ localUri }) => {
     try {
-      console.log('before reduceImageAsync')
       const { uri: reducedImage, width, height } = await reduceImageAsync(
         localUri,
       );
 
-      console.log('after reduceImageAsync')
-      const remoteUri = await this.uploadPhotoAsync(reducedImage);
-      console.log(remoteUri)
-      this.collection.add({
+      const photoUrl = await this.uploadPhotoAsync(reducedImage, profileCollectionName);
+
+      this.updateUser({
+        photoUrl: {
+          url: photoUrl,
+          width,
+          height
+        },
+      });
+    } catch ({ message }) {
+      alert(message);
+    }
+  }
+
+  postEvent = async ({ text, localUri, location }) => {
+    try {
+      const { uri: reducedImage, width, height } = await reduceImageAsync(
+        localUri,
+      );
+
+      const image = await this.uploadPhotoAsync(reducedImage, eventCollectionName);
+
+      this.eventCollection.add({
         text,
         uid: this.uid,
         timestamp: this.timestamp,
         imageWidth: width,
         imageHeight: height,
-        image: remoteUri,
-        user: getUserInfo(),
+        image,
+        location: location.coords,
+        user: this.getCurrentUser().providerData[0],
       });
     } catch ({ message }) {
-      console.error(`error ${message}`);
       alert(message);
     }
   };
 
   // Helpers
-  get collection() {
-    return firebase.firestore().collection(collectionName);
+  get eventCollection() {
+    return firebase.firestore().collection(eventCollectionName);
   }
 
   get uid() {
@@ -126,7 +136,10 @@ class Fire {
   }
 
   updateUser(options) {
-    return firebase.auth().currentUser.updateProfile(options);
+    return firebase.auth().currentUser.updateProfile({
+      ...options,
+      timestamp: this.timestamp,
+    });
   }
 
   deleteUser() {
@@ -138,7 +151,7 @@ class Fire {
       .firestore()
       .collection('users')
       .doc(`${userData.uid}`)
-      .set(userData)
+      .set({ ...userData, timestamp: this.timestamp })
   }
 }
 

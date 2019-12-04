@@ -1,0 +1,18 @@
+{
+  "Donut Alley": {
+    "address": "471 Magnolia Ave, Larkspur, CA 94939",
+    "coordinates": [37.93557, -122.53548]
+  },
+  "Arsicault Bakery": {
+    "address": "397 Arguello Blvd, San Francisco, CA 94118",
+    "coodrinates": [37.795021, -122.461182]
+  },
+  "Devil's Teeth Baking Company": {
+    "address": "3876 Noriega St, San Francisco, CA 94122",
+    "coordinates": [37.7532, -122.50496]
+  },
+  "Tartine Inner Sunset": {
+    "address": "1226 9th Ave, San Francisco, CA 94122",
+    "coordinates": [37.76533, -122.46613]
+  }
+}

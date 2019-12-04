@@ -20,13 +20,17 @@ class AddPhotoModal extends React.Component {
 
   onSave = () => {
     const text = this.state.text;
-    const image = this.props.newImageUri;
+    const { newImageUri: localUri, location } = this.props;
 
-    if (text && image) {
-      this.closeModal();
-      Firebase.shared.post({ text: text.trim(), image });
+    if (!location) {
+      alert('Location was not found.')
+    } else if (!text) {
+      alert('Description is not valid.')
+    } else if (!localUri) {
+      alert('There was a problem with your image')
     } else {
-      alert('Need valid description');
+      this.closeModal();
+      Firebase.shared.postEvent({ text: text.trim(), localUri, location });
     }
 
   }
