@@ -1,13 +1,11 @@
 import * as React from 'react'
 import * as Yup from 'yup'
 
-import { StyleSheet, View } from 'react-native'
+import { FormButton, FormButtonContainer, FormInput } from '../components';
 
 import { AppPageContainer } from '../components';
 import ErrorMessage from '../components/ErrorMessage'
 import Firebase from '../config/Firebase'
-import FormButton from '../components/FormButton'
-import FormInput from '../components/FormInput'
 import { Formik } from 'formik'
 
 const validationSchema = Yup.object().shape({
@@ -61,7 +59,7 @@ class ForgotPassword extends React.Component {
                   onBlur={handleBlur('email')}
                 />
                 <ErrorMessage errorValue={touched.email && errors.email} />
-                <View style={styles.buttonContainer}>
+                <FormButtonContainer>
                   <FormButton
                     buttonType='outline'
                     onPress={handleSubmit}
@@ -69,7 +67,7 @@ class ForgotPassword extends React.Component {
                     buttonColor='#039BE5'
                     disabled={!isValid || isSubmitting}
                   />
-                </View>
+                </FormButtonContainer>
                 <ErrorMessage errorValue={errors.general} />
               </>
             )}
@@ -78,11 +76,5 @@ class ForgotPassword extends React.Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  buttonContainer: {
-    margin: 25
-  }
-})
 
 export default ForgotPassword;

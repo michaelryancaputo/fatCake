@@ -4,15 +4,12 @@ import * as React from 'react';
 
 import {
   Button,
-  Dimensions,
-  StyleSheet,
   Text,
-  View
 } from 'react-native';
+import { ClusterContainer, ClusterCounterText, MapContainer, MapViewPopout, StyledMapView } from '../components'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 
 import AddPhotoModal from './AddPhotoModal';
-import ClusteredMapView from 'react-native-maps-super-cluster'
 import Constants from 'expo-constants'
 import Croissant from '../assets/images/croissant.png';
 import Locations from '../locations'
@@ -21,18 +18,6 @@ import _ from 'lodash';
 import { getPermission } from "../utils";
 import mapStyle from '../mapStyle.json';
 import openMap from 'react-native-open-maps';
-import styled from 'styled-components/native';
-
-const StyledMapView = styled(ClusteredMapView)`
-  width: ${Dimensions.get('window').width};
-  height: ${Dimensions.get('window').height};
-`;
-
-const MapContainer = styled.View`
-  height: 200;
-  width: 100%;
-  background-color: tomato;
-`;
 
 const options = {
   allowsEditing: true
@@ -110,17 +95,15 @@ class DynamicMap extends React.Component {
 
     return (
       <MapView.Marker
-        image={Croissant}
-        width={10}
-        height={10}
         anchor={{ x: -.0025, y: -.0025 }}
-        coordinate={coordinate} onPress={onPress}
+        coordinate={coordinate}
+        onPress={onPress}
       >
-        <View style={styles.myClusterStyle}>
-          <Text style={styles.myClusterTextStyle}>
+        <ClusterContainer>
+          <ClusterCounterText>
             {pointCount}
-          </Text>
-        </View>
+          </ClusterCounterText>
+        </ClusterContainer>
       </MapView.Marker>
     )
   }
@@ -134,12 +117,12 @@ class DynamicMap extends React.Component {
       anchor={{ x: -.0025, y: -.0025 }}
       coordinate={data.location}>
       <MapView.Callout>
-        <View style={{ width: 100, height: 'auto' }}>
+        <MapViewPopout>
           <Text>
             {data.name}
           </Text>
           <Button title={data.address} onPress={link} />
-        </View>
+        </MapViewPopout>
       </MapView.Callout>
     </MapView.Marker>
   }
@@ -184,81 +167,3 @@ DynamicMap.defaultProps = {
 }
 
 export default DynamicMap;
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  clusterContainer: {
-    width: 30,
-    height: 30,
-    padding: 6,
-    borderWidth: 1,
-    borderRadius: 15,
-    alignItems: 'center',
-    borderColor: '#65bc46',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-  },
-  clusterText: {
-    fontSize: 13,
-    color: '#65bc46',
-    fontWeight: '500',
-    textAlign: 'center',
-  },
-  controlBar: {
-    top: 48,
-    left: 25,
-    right: 25,
-    height: 40,
-    borderRadius: 20,
-    position: 'absolute',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    backgroundColor: 'white',
-    justifyContent: 'space-between',
-  },
-  button: {
-    paddingVertical: 8,
-    paddingHorizontal: 20,
-  },
-  novaLabLogo: {
-    right: 8,
-    bottom: 8,
-    width: 64,
-    height: 64,
-    position: 'absolute',
-  },
-  text: {
-    fontSize: 16,
-    fontWeight: 'bold'
-  },
-  clusterContainer: {
-    width: 24,
-    height: 24,
-    borderWidth: 1,
-    borderRadius: 12,
-    alignItems: 'center',
-    borderColor: '#65bc46',
-    justifyContent: 'center',
-    backgroundColor: '#fff'
-  },
-  counterText: {
-    fontSize: 14,
-    color: '#65bc46',
-    fontWeight: '400'
-  },
-  calloutStyle: {
-    width: 64,
-    height: 64,
-    padding: 8,
-    borderRadius: 8,
-    borderColor: '#65bc46',
-    backgroundColor: 'white',
-  },
-})

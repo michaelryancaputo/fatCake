@@ -1,16 +1,13 @@
 import * as React from 'react'
 import * as Yup from 'yup'
 
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { AppPageContainer, ErrorMessage, FormButton, FormButtonContainer, FormInput } from '../components';
 
-import { AppPageContainer } from '../components';
 import { Button } from 'react-native-elements'
-import ErrorMessage from '../components/ErrorMessage'
 import Firebase from '../config/Firebase'
-import FormButton from '../components/FormButton'
-import FormInput from '../components/FormInput'
 import { Formik } from 'formik'
 import { Ionicons } from '@expo/vector-icons'
+import { TouchableOpacity } from 'react-native'
 
 const validationSchema = Yup.object().shape({
   displayName: Yup.string()
@@ -169,7 +166,7 @@ class Signup extends React.Component {
                 <ErrorMessage
                   errorValue={touched.confirmPassword && errors.confirmPassword}
                 />
-                <View style={styles.buttonContainer}>
+                <FormButtonContainer>
                   <FormButton
                     buttonType='outline'
                     onPress={handleSubmit}
@@ -178,7 +175,7 @@ class Signup extends React.Component {
                     disabled={!isValid || isSubmitting}
                     loading={isSubmitting}
                   />
-                </View>
+                </FormButtonContainer>
                 <ErrorMessage errorValue={errors.general} />
               </>
             )}
@@ -196,10 +193,5 @@ class Signup extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  buttonContainer: {
-    margin: 25
-  },
-})
 
 export default Signup;

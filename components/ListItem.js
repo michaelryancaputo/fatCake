@@ -1,6 +1,7 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, View } from "react-native";
 
 import React from "react";
+import styled from 'styled-components';
 
 class ListItem extends React.Component {
   state = {
@@ -18,7 +19,7 @@ class ListItem extends React.Component {
   }
 
   render() {
-    const { text, name, imageWidth, imageHeight, uid, image, user } = this.props;
+    const { text, name, imageWidth, imageHeight, image, user } = this.props;
 
     // Reduce the name to something
     const imgW = imageWidth || this.state.width;
@@ -37,21 +38,20 @@ class ListItem extends React.Component {
           source={{ uri: image }}
         />
         <View style={{ padding: 12 }}>
-          <Text style={styles.text}>{user.displayName || name}</Text>
-          <Text style={styles.subtitle}>{text}</Text>
+          <Text>{user.displayName || name}</Text>
+          <Subtitle>{text}</Subtitle>
         </View>
       </View>
     );
   }
 }
 
+const Text = styled.Text`
+  font-weight: 600;
+`;
 
-const styles = StyleSheet.create({
-  text: { fontWeight: "600" },
-  subtitle: {
-    opacity: 0.8
-  },
-});
-
+const Subtitle = styled.Text`
+  opacity: 0.8;
+`;
 
 export default ListItem;
