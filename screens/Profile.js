@@ -50,9 +50,9 @@ class Profile extends React.Component {
         await ImagePicker.launchCameraAsync(options) :
         await ImagePicker.launchImageLibraryAsync(options);
 
-      console.log(result)
+      console.log(result.uri)
 
-      if (!result.cancelled) {
+      if (!result.cancelled && result.uri) {
         Firebase.shared.postUserPhoto(`${result.uri}`)
       }
     }
@@ -106,7 +106,10 @@ class Profile extends React.Component {
             touched,
             handleBlur,
             isSubmitting,
+            dirty,
+            ...rest
           }) => {
+            console.log(rest)
             return (
               <>
                 <FormInput
@@ -118,9 +121,6 @@ class Profile extends React.Component {
                   iconColor='#2C384A'
                   onBlur={handleBlur('displayName')}
                 />
-                <FormButton
-                  onPress={this.pickImage}
-                  title="Pick an image from camera roll" />
                 <ErrorMessage errorValue={touched.displayName && errors.displayName} />
                 <FormInput
                   name='email'
@@ -133,17 +133,23 @@ class Profile extends React.Component {
                   onBlur={handleBlur('email')}
                 />
                 <ErrorMessage errorValue={touched.email && errors.email} />
-                <View style={{}}>
+
+                <FormButton
+                  onPress={this.pickImage}
+                  title="Choose a profile photo"
+                />
+
+                <View>
                   <FormButton
-                    buttonType='outline'
                     onPress={handleSubmit}
-                    title='SUBMIT'
+                    title='Save'
                     buttonColor='#F57C00'
-                    disabled={!isValid || isSubmitting}
+                    disabled={!isValid || isSubmitting || !dirty}
                     loading={isSubmitting}
                   />
                 </View>
                 <ErrorMessage errorValue={errors.general} />
+
               </>
             )
           }}
@@ -151,9 +157,9 @@ class Profile extends React.Component {
         <SignoutButton {...this.props} />
         <FormButton
           buttonType='outline'
+          buttonColor='#F57C00'
           onPress={this.handleDelete}
           title='DELETE'
-          buttonColor='#F57C00'
         />
 
       </AppPageContainer>

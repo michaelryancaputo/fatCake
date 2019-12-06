@@ -1,7 +1,7 @@
 import * as React from 'react'
 
-import { Button } from 'react-native-elements'
 import Firebase from '../config/Firebase'
+import FormButton from './FormButton'
 
 class SignoutButton extends React.Component {
   handleSignout = async () => {
@@ -14,14 +14,12 @@ class SignoutButton extends React.Component {
   }
 
   render() {
-    return <Button
+    return <FormButton
       title='Signout'
+      buttonType='outline'
+      buttonColor='#F57C00'
       onPress={this.handleSignout}
-      titleStyle={{
-        color: '#F57C00'
-      }}
       type='clear'
-      {...this.props}
     />
   }
 }

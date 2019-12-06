@@ -1,20 +1,20 @@
 import * as React from 'react'
 
-import { StyleSheet, Text, View } from 'react-native'
+import styled from 'styled-components/native';
 
-const ErrorMessage = ({ errorValue }) => (
-  <View style={styles.container}>
-    <Text style={styles.errorText}>{errorValue}</Text>
-  </View>
-)
+const ErrorContainer = styled.View`
+  margin-left: 25;
+`;
 
-const styles = StyleSheet.create({
-  container: {
-    marginLeft: 25
-  },
-  errorText: {
-    color: 'red'
-  }
-})
+const ErrorLabel = styled.Text`
+  color: red;
+  font-weight: bold;
+`;
+
+const ErrorMessage = ({ errorValue }) => errorValue ? (
+  <ErrorContainer>
+    <ErrorLabel>{errorValue}</ErrorLabel>
+  </ErrorContainer>
+) : null;
 
 export default ErrorMessage
