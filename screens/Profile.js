@@ -107,9 +107,7 @@ class Profile extends React.Component {
             handleBlur,
             isSubmitting,
             dirty,
-            ...rest
           }) => {
-            console.log(rest)
             return (
               <>
                 <FormInput
