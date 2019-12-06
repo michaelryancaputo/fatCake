@@ -1,5 +1,6 @@
 import { Image, View } from "react-native";
 
+import Photo from './Photo';
 import React from "react";
 import styled from 'styled-components';
 
@@ -28,15 +29,7 @@ class ListItem extends React.Component {
 
     return (
       <View>
-        <Image
-          resizeMode="contain"
-          style={{
-            backgroundColor: "#D8D8D8",
-            width: "100%",
-            aspectRatio: aspect
-          }}
-          source={{ uri: image }}
-        />
+        <Photo uri={image} />
         <View style={{ padding: 12 }}>
           <Text>{user.displayName || name}</Text>
           <Subtitle>{text}</Subtitle>

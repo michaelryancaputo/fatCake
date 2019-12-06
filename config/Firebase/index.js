@@ -55,21 +55,20 @@ class Fire {
   uploadPhotoAsync = async (uri, collectionName) =>
     uploadPhoto(uri, `${collectionName}/${this.uid}/${uuid.v4()}.jpg`);
 
-  postUserPhoto = async ({ localUri }) => {
+  postUserPhoto = async (localUri) => {
     try {
       const { uri: reducedImage, width, height } = await reduceImageAsync(
         localUri,
       );
 
-      const photoUrl = await this.uploadPhotoAsync(reducedImage, profileCollectionName);
+      const photoURL = await this.uploadPhotoAsync(reducedImage, profileCollectionName);
 
       this.updateUser({
-        photoUrl: {
-          url: photoUrl,
-          width,
-          height
-        },
+        photoURL,
       });
+
+      return photoURL;
+
     } catch ({ message }) {
       alert(message);
     }
@@ -124,9 +123,11 @@ class Fire {
   signOut() {
     return firebase.auth().signOut()
   }
+
   checkUserAuth(user) {
     return firebase.auth().onAuthStateChanged(user)
   }
+
   passwordReset(email) {
     return firebase.auth().sendPasswordResetEmail(email);
   }

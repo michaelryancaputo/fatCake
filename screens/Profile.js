@@ -3,8 +3,8 @@ import * as Permissions from 'expo-permissions';
 import * as React from 'react';
 import * as Yup from 'yup'
 
-import { AppPageContainer, SignoutButton } from '../components';
-import { Text, View } from 'react-native'
+import { AppPageContainer, Photo, SignoutButton } from '../components';
+import { Image, Text, View } from 'react-native'
 
 import Constants from 'expo-constants';
 import ErrorMessage from '../components/ErrorMessage'
@@ -41,7 +41,7 @@ class Profile extends React.Component {
     }
   }
 
-  pickImage = async () => {
+  pickImage = async (handleChange) => {
     const permissionType = Constants.isDevice ? Permissions.CAMERA : Permissions.CAMERA_ROLL;
     const status = await getPermission(permissionType);
 
@@ -50,10 +50,14 @@ class Profile extends React.Component {
         await ImagePicker.launchCameraAsync(options) :
         await ImagePicker.launchImageLibraryAsync(options);
 
-      console.log(result.uri)
-
       if (!result.cancelled && result.uri) {
-        Firebase.shared.postUserPhoto(`${result.uri}`)
+        const photoURL = await Firebase.shared.postUserPhoto(`${result.uri}`);
+        handleChange(photoURL);
+        this.setState({
+          userData: {
+            photoURL
+          }
+        })
       }
     }
   }
@@ -66,12 +70,16 @@ class Profile extends React.Component {
     })
   }
 
-  componentDidMount() {
+  getUserData() {
     const userData = Firebase.shared.getCurrentUser();
     this.setState({
       uid: userData.uid,
       userData: userData.providerData[0]
     })
+  }
+
+  componentDidMount() {
+    this.getUserData();
   }
 
   handleOnModifyUser = async (values, actions) => {
@@ -83,6 +91,7 @@ class Profile extends React.Component {
       actions.setFieldError('general', error.message)
     } finally {
       actions.setSubmitting(false)
+      this.getUserData();
     }
   }
 
@@ -93,6 +102,9 @@ class Profile extends React.Component {
 
     return (
       <AppPageContainer heading="Profile">
+        {this.state.userData.photoURL && <Photo uri={this.state.userData.photoURL}
+        />
+        }
         <Formik
           initialValues={this.state.userData}
           onSubmit={this.handleOnModifyUser}
@@ -133,7 +145,7 @@ class Profile extends React.Component {
                 <ErrorMessage errorValue={touched.email && errors.email} />
 
                 <FormButton
-                  onPress={this.pickImage}
+                  onPress={() => this.pickImage(handleChange('photoURL'))}
                   title="Choose a profile photo"
                 />
 

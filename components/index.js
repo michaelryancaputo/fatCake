@@ -14,3 +14,4 @@ export { default as StyledMapView } from './StyledMapView';
 export { default as MapContainer } from './MapContainer';
 export { default as MapViewPopout } from './MapViewPopout';
 export { default as FormButtonContainer } from './FormButtonContainer';
+export { default as Photo } from './Photo';
