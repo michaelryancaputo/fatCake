@@ -12,7 +12,7 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import AddPhotoModal from './AddPhotoModal';
 import Constants from 'expo-constants'
 import Croissant from '../assets/images/croissant.png';
-import Locations from '../locations'
+import Firebase from '../config/Firebase'
 import MapButton from './MapButton';
 import _ from 'lodash';
 import { getPermission } from "../utils";
@@ -28,6 +28,7 @@ class DynamicMap extends React.Component {
     super(props);
 
     this.state = {
+      locations: [],
       addPhotoModalVisible: false,
       region: {
         latitude: 37.78825,
@@ -44,6 +45,16 @@ class DynamicMap extends React.Component {
     this.setModalVisible = this.setModalVisible.bind(this);
     this.renderMarker = this.renderMarker.bind(this);
     this.renderCluster = this.renderCluster.bind(this);
+    this.getLocations = this.getLocations.bind(this);
+  }
+
+  componentWillMount() {
+    this.getLocations();
+  }
+
+  getLocations = async () => {
+    const locations = await Firebase.shared.getAllDocuments('locations');
+    this.setState({ locations })
   }
 
   onRegionChange(region) {
@@ -140,7 +151,7 @@ class DynamicMap extends React.Component {
           <StyledMapView
             ref={(r) => { this.map = r }}
             provider={undefined}
-            data={Locations}
+            data={this.state.locations}
             initialRegion={this.state.region}
             onRegionChange={this.onRegionChangeDelayed}
             provider={PROVIDER_GOOGLE}

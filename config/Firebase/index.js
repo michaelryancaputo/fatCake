@@ -154,6 +154,26 @@ class Fire {
       .doc(`${userData.uid}`)
       .set({ ...userData, timestamp: this.timestamp })
   }
+
+  getAllDocuments = async (collectionName) => {
+    let ref = firebase.firestore().collection(collectionName);
+    const querySnapshot = await ref.get();
+    const data = [];
+
+    querySnapshot.forEach((doc) => {
+      if (doc.exists) {
+        const post = doc.data() || {};
+        const reduced = {
+          key: doc.id,
+          ...post,
+        };
+
+        data.push(reduced);
+      }
+    });
+
+    return data;
+  }
 }
 
 Fire.shared = new Fire();

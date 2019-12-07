@@ -14,10 +14,10 @@ class Map extends React.Component {
   };
 
   componentWillMount() {
-    this._getLocationAsync();
+    this.getUserLocationAsync();
   }
 
-  _getLocationAsync = async () => {
+  getUserLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
 
     if (status !== 'granted') {
