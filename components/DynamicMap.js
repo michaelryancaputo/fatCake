@@ -6,7 +6,7 @@ import {
   Button,
   Text,
 } from 'react-native';
-import { ClusterContainer, ClusterCounterText, MapContainer, MapViewPopout, StyledMapView } from '../components'
+import { ClusterContainer, ClusterCounterText, MapContainer, MapViewPopout, StyledMapView } from './index'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 
 import AddPhotoModal from './AddPhotoModal';
@@ -22,6 +22,15 @@ import openMap from 'react-native-open-maps';
 const options = {
   allowsEditing: true
 };
+
+const convertToReadableLocations = queryLocations => _.reduce(queryLocations, (acc, { d }) => [...acc, {
+  location: {
+    latitude: d.coordinates._lat,
+    longitude: d.coordinates._long
+  },
+  address: d.address,
+  name: d.name
+}], [])
 
 class DynamicMap extends React.Component {
   constructor(props) {
@@ -53,8 +62,10 @@ class DynamicMap extends React.Component {
   }
 
   getLocations = async () => {
-    const locations = await Firebase.shared.getAllDocuments('locations');
-    this.setState({ locations })
+    const queryResult = await Firebase.shared.getAllDocuments('locations');
+    const locations = convertToReadableLocations(queryResult);
+    console.log('fired')
+    this.setState({ locations });
   }
 
   onRegionChange(region) {
