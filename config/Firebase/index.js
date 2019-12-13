@@ -111,8 +111,8 @@ class Fire {
         imageHeight: height,
         location: location.coords,
         timestamp: this.timestamp,
-        proximity: proximity ? firebase.firestore().doc(`${locationCollectionName}/${proximity.id}`) : '',
-        user: firebase.firestore().doc('users/' + firebase.auth().currentUser.uid)
+        proximity: proximity ? proximity.id : '',
+        user: this.uid
       });
     } catch (error) {
       console.log(error)
