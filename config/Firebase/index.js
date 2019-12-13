@@ -10,9 +10,9 @@ import _ from 'lodash';
 import firebaseConfig from './firebaseConfig';
 import uuid from 'uuid';
 
-const eventCollectionName = 'event-photos';
-const profileCollectionName = 'profile-photos';
-const locationCollectionName = 'locations';
+export const eventCollectionName = 'event-photos';
+export const profileCollectionName = 'profile-photos';
+export const locationCollectionName = 'locations';
 
 class Fire {
   constructor() {
@@ -102,6 +102,7 @@ class Fire {
 
       const proximity = await this.checkLocationProximity(location);
       const image = await this.uploadPhotoAsync(reducedImage, eventCollectionName);
+      const user = await this.getCurrentUser();
 
       this.eventCollection.add({
         text,
@@ -111,8 +112,8 @@ class Fire {
         imageHeight: height,
         location: location.coords,
         timestamp: this.timestamp,
-        proximity: proximity ? proximity.id : '',
-        user: this.uid
+        proximity: proximity ? proximity.id : '0',
+        user
       });
     } catch (error) {
       console.log(error)
@@ -158,7 +159,7 @@ class Fire {
   }
 
   getCurrentUser() {
-    return firebase.auth().currentUser;
+    return (firebase.auth().currentUser || {});
   }
 
   updateUser(options) {
@@ -170,6 +171,11 @@ class Fire {
 
   deleteUser() {
     return firebase.auth().currentUser.delete()
+  }
+
+  firestore() {
+    return firebase
+      .firestore()
   }
 
   createNewUser(userData) {

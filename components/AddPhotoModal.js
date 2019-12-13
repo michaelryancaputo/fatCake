@@ -50,7 +50,7 @@ class AddPhotoModal extends React.Component {
         />
         <TextInput
           multiline
-          style={{ flex: 1, paddingHorizontal: 16 }}
+          style={{ flex: 1, padding: 16 }}
           placeholder="Add a neat description..."
           onChangeText={text => this.setState({ text })}
         />
