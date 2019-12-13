@@ -37,7 +37,7 @@ class Profile extends React.Component {
       displayName: undefined,
       email: undefined,
       phoneNumber: undefined,
-      photoURL: undefined,
+      photoUrl: undefined,
     }
   }
 
@@ -51,11 +51,11 @@ class Profile extends React.Component {
         await ImagePicker.launchImageLibraryAsync(options);
 
       if (!result.cancelled && result.uri) {
-        const photoURL = await Firebase.shared.postUserPhoto(`${result.uri}`);
-        handleChange(photoURL);
+        const photoUrl = await Firebase.shared.postUserPhoto(`${result.uri}`);
+        handleChange(photoUrl);
         this.setState({
           userData: {
-            photoURL
+            photoUrl
           }
         })
       }
@@ -70,11 +70,11 @@ class Profile extends React.Component {
     })
   }
 
-  getUserData() {
-    const userData = Firebase.shared.getCurrentUser();
+  getUserData = async () => {
+    const userData = await Firebase.shared.getCurrentUser();
     this.setState({
       uid: userData.uid,
-      userData: userData.providerData[0]
+      userData: userData
     })
   }
 
@@ -83,9 +83,9 @@ class Profile extends React.Component {
   }
 
   handleOnModifyUser = async (values, actions) => {
-    const { displayName, email, phoneNumber, photoURL } = values;
+    const { displayName, email, phoneNumber, photoUrl } = values;
     try {
-      const options = { displayName, email, phoneNumber, photoURL }
+      const options = { displayName, email, phoneNumber, photoUrl }
       await Firebase.shared.updateUser(options)
     } catch (error) {
       actions.setFieldError('general', error.message)
@@ -102,7 +102,7 @@ class Profile extends React.Component {
 
     return (
       <AppPageContainer heading="Profile">
-        {this.state.userData.photoURL && <Photo uri={this.state.userData.photoURL}
+        {this.state.userData.photoUrl && <Photo uri={this.state.userData.photoUrl}
         />
         }
         <Formik
@@ -145,7 +145,7 @@ class Profile extends React.Component {
                 <ErrorMessage errorValue={touched.email && errors.email} />
 
                 <FormButton
-                  onPress={() => this.pickImage(handleChange('photoURL'))}
+                  onPress={() => this.pickImage(handleChange('photoUrl'))}
                   title="Choose a profile photo"
                 />
 

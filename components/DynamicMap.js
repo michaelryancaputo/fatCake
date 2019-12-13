@@ -64,7 +64,6 @@ class DynamicMap extends React.Component {
   getLocations = async () => {
     const queryResult = await Firebase.shared.getAllDocuments('locations');
     const locations = convertToReadableLocations(queryResult);
-    console.log('fired')
     this.setState({ locations });
   }
 
