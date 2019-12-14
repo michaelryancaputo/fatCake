@@ -1,6 +1,6 @@
+import { ActivityIndicator, AppPageContainer } from '../components';
 import Firebase, { eventCollectionName, userCollectionName } from "../config/Firebase";
 
-import { AppPageContainer } from '../components';
 import React from "react";
 import _ from 'lodash';
 import styled from 'styled-components/native';
@@ -63,9 +63,7 @@ const Leaderboard = (props) => {
   }
 
   if (userListLoading || photoListLoading) {
-    return <AppPageContainer {...props} heading={`Leaderboard`}>
-      <ListText>Loading...</ListText>
-    </AppPageContainer>
+    return <ActivityIndicator />
   }
 
   const leaderboardList = transformLeaderboard(photoList, userList);

@@ -1,11 +1,11 @@
-import * as Font from 'expo-font'
-import * as Icon from '@expo/vector-icons'
+import * as Font from 'expo-font';
+import * as Icon from '@expo/vector-icons';
 
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import { AppLoading } from 'expo'
-import { Asset } from 'expo-asset'
-import Firebase from '../config/Firebase'
+import { AppLoading } from 'expo';
+import { Asset } from 'expo-asset';
+import Firebase from '../config/Firebase';
 
 class Initial extends Component {
   state = {

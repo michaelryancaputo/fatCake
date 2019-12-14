@@ -1,7 +1,7 @@
+import { ActivityIndicator, List } from "../components";
 import { LayoutAnimation, RefreshControl } from "react-native";
 
 import Firebase from "../config/Firebase";
-import List from "../components/List";
 import React from "react";
 
 const PAGE_SIZE = 5;
@@ -63,6 +63,11 @@ class FeedScreen extends React.Component {
   onPressFooter = () => this.makeRemoteRequest(this.lastKnownKey);
 
   render() {
+
+    if (this.state.loading) {
+      return <ActivityIndicator />
+    }
+
     LayoutAnimation.easeInEaseOut();
 
     return (

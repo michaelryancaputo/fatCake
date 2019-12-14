@@ -3,8 +3,8 @@ import * as Permissions from 'expo-permissions';
 import * as React from 'react';
 import * as Yup from 'yup'
 
-import { AppPageContainer, Photo, SignoutButton } from '../components';
-import { Image, Text, View } from 'react-native'
+import { ActivityIndicator, AppPageContainer, Photo, SignoutButton } from '../components';
+import { Text, View } from 'react-native'
 
 import Constants from 'expo-constants';
 import ErrorMessage from '../components/ErrorMessage'
@@ -97,7 +97,7 @@ class Profile extends React.Component {
 
   render() {
     if (this.state.uid === undefined) {
-      return <Text>Loading...</Text>
+      return <ActivityIndicator />
     }
 
     return (
