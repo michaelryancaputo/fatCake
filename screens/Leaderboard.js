@@ -56,7 +56,17 @@ const Leaderboard = (props) => {
   );
 
 
-  if (photoListLoading || photoListError || userListLoading || userListError) return null;
+  if (photoListError || userListError) {
+    return <AppPageContainer {...props} heading={`Leaderboard`}>
+      <ListText>There was an error!</ListText>
+    </AppPageContainer>
+  }
+
+  if (userListLoading || photoListLoading) {
+    return <AppPageContainer {...props} heading={`Leaderboard`}>
+      <ListText>Loading...</ListText>
+    </AppPageContainer>
+  }
 
   const leaderboardList = transformLeaderboard(photoList, userList);
 
