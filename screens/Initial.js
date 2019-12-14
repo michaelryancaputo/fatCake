@@ -34,7 +34,7 @@ class Initial extends Component {
   loadLocalAsync = async () => {
     return await Promise.all([
       Asset.loadAsync([
-        require('../assets/icon.png')
+        require('../assets/images/icon.png')
       ]),
       Font.loadAsync({
         ...Icon.Ionicons.font
