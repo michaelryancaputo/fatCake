@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import Firebase from '../config/Firebase'
+import Firebase from '../firebase'
 import FormButton from './FormButton'
 
 class SignoutButton extends React.Component {

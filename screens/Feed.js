@@ -1,7 +1,7 @@
 import { ActivityIndicator, List } from "../components";
 import { LayoutAnimation, RefreshControl } from "react-native";
 
-import Firebase from "../config/Firebase";
+import Firebase from "../firebase";
 import React from "react";
 
 const PAGE_SIZE = 5;

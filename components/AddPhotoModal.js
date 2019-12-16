@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Image, KeyboardAvoidingView, Modal, TextInput } from 'react-native';
 
 import { AppPageContainer } from './AppContainer';
-import Firebase from '../config/Firebase';
+import Firebase from '../firebase';
 import FormButton from './FormButton';
 
 class AddPhotoModal extends React.Component {

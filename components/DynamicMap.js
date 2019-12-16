@@ -12,7 +12,7 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import AddPhotoModal from './AddPhotoModal';
 import Constants from 'expo-constants'
 import Croissant from '../assets/images/croissant.png';
-import Firebase from '../config/Firebase'
+import Firebase from '../firebase'
 import MapButton from './MapButton';
 import _ from 'lodash';
 import { getPermission } from "../utils";

@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
-import Firebase from '../config/Firebase';
+import Firebase from '../firebase';
 
 class Initial extends Component {
   state = {

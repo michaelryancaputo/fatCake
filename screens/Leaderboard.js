@@ -1,10 +1,10 @@
 import { ActivityIndicator, AppPageContainer } from '../components';
-import Firebase, { eventCollectionName, userCollectionName } from "../config/Firebase";
 
 import React from "react";
 import _ from 'lodash';
+import getLeaderboard from '../firebase/getUserList';
+import getUserList from '../firebase/getUserList';
 import styled from 'styled-components/native';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 const ListItem = styled.View`
   padding: 10px;
@@ -14,47 +14,18 @@ const ListText = styled.Text`
   color: black;
 `;
 
-
-const getUserList = () => {
-  const [userList, userListLoading, userListError] = useCollectionData(
-    Firebase.shared.firestore().collection(userCollectionName),
-    {
-      snapshotListenOptions: { includeMetadataChanges: true },
-    }
-  );
-
-  const output = _.reduce(userList, (acc, user) => {
+const transformLeaderboard = (photoList, userList) => {
+  return _.reduce(photoList, (acc, item, key) => {
     return {
       ...acc,
-      [user.uid]: { ...user }
+      [userList[key].displayName]: acc[key] ? acc[key] + 1 : 1
     }
-  })
-
-
-  return [output, userListLoading, userListError]
-}
-
-const transformLeaderboard = (photoList, userList) => {
-  return _.reduce(photoList, (acc, item) => {
-    if (userList[item.user.uid]) {
-      return {
-        ...acc,
-        [userList[item.user.uid].displayName]: acc[item.user.uid] ? acc[item.user.uid] + 1 : 1
-      }
-    }
-    return acc;
   }, {})
 }
 
 const Leaderboard = (props) => {
-  const [userList, userListLoading, userListError, userListCount] = getUserList();
-  const [photoList, photoListLoading, photoListError] = useCollectionData(
-    Firebase.shared.firestore().collection(eventCollectionName).where('proximity', '>', '0'),
-    {
-      snapshotListenOptions: { includeMetadataChanges: true },
-    }
-  );
-
+  const [userList, userListLoading, userListError] = getUserList();
+  const [photoList, photoListLoading, photoListError] = getLeaderboard(true);
 
   if (photoListError || userListError) {
     return <AppPageContainer {...props} heading={`Leaderboard`}>

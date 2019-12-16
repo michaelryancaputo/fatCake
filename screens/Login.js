@@ -5,7 +5,7 @@ import { AppPageContainer, FormButtonContainer } from '../components';
 
 import { Button } from 'react-native-elements'
 import ErrorMessage from '../components/ErrorMessage'
-import Firebase from '../config/Firebase'
+import Firebase from '../firebase'
 import FormButton from '../components/FormButton'
 import FormInput from '../components/FormInput'
 import { Formik } from 'formik'

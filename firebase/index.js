@@ -4,7 +4,7 @@ import 'firebase/firestore';
 import * as firebase from 'firebase';
 
 import { GeoCollectionReference, GeoFirestore, GeoQuery, GeoQuerySnapshot } from 'geofirestore';
-import { reduceImageAsync, uploadPhoto } from '../../utils';
+import { reduceImageAsync, uploadPhoto } from '../utils';
 
 import _ from 'lodash';
 import firebaseConfig from './firebaseConfig';

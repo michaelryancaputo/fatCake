@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import { AppPageContainer, ErrorMessage, FormButton, FormButtonContainer, FormInput } from '../components';
 
 import { Button } from 'react-native-elements'
-import Firebase from '../config/Firebase'
+import Firebase from '../firebase'
 import { Formik } from 'formik'
 import { Ionicons } from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native'

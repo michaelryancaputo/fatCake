@@ -8,7 +8,7 @@ import { Text, View } from 'react-native'
 
 import Constants from 'expo-constants';
 import ErrorMessage from '../components/ErrorMessage'
-import Firebase from '../config/Firebase'
+import Firebase from '../firebase'
 import FormButton from '../components/FormButton'
 import FormInput from '../components/FormInput'
 import { Formik } from 'formik'
