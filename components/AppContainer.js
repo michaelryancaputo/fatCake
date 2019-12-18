@@ -1,26 +1,23 @@
 import * as React from 'react';
 
-import Constants from 'expo-constants';
-import Heading from './Heading';
-import { ScrollView } from 'react-native';
-import styled from 'styled-components/native';
+import { Body, Container, Content, Header, Left, Right, Title } from 'native-base';
 
-const AppContainer = styled.SafeAreaView`
-    flex: 1;
-    padding-top: ${Constants.statusBarHeight ? Constants.statusBarHeight : 20};
-`;
-
-export const AppPageContainer = props => {
-    if (props.heading) {
-        return <ScrollView contentInsetAdjustmentBehavior="automatic">
-            <AppContainer>
-                <Heading>{props.heading}</Heading>
-                {props.children}
-            </AppContainer>
-        </ScrollView>;
-    }
-
-    return <AppContainer {...props} />;
+export const AppPageContainer = ({ children, heading }) => {
+    return <Container>
+        {heading && <Header>
+            <Left />
+            <Body>
+                {heading && <Title>
+                    {heading}
+                </Title>}
+            </Body>
+            <Right />
+        </Header>}
+        <Content padder>
+            {children}
+        </Content>
+    </Container>;
 };
 
-export default AppContainer;
+
+export default AppPageContainer;

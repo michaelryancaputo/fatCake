@@ -1,12 +1,10 @@
 import * as React from 'react';
 import * as Yup from 'yup';
 
-import { AppPageContainer, FormButtonContainer } from '../components';
+import { AppPageContainer, Button } from '../components';
 
-import { Button } from 'react-native-elements';
 import ErrorMessage from '../components/ErrorMessage';
 import Firebase from '../firebase';
-import FormButton from '../components/FormButton';
 import FormInput from '../components/FormInput';
 import { Formik } from 'formik';
 import { Ionicons } from '@expo/vector-icons';
@@ -102,16 +100,14 @@ class Login extends React.Component {
                   }
                 />
                 <ErrorMessage errorValue={touched.password && errors.password} />
-                <FormButtonContainer>
-                  <FormButton
-                    buttonType='outline'
-                    onPress={handleSubmit}
-                    title='LOGIN'
-                    buttonColor='#039BE5'
-                    disabled={!isValid || isSubmitting}
-                    loading={isSubmitting}
-                  />
-                </FormButtonContainer>
+                <Button
+                  buttonType='outline'
+                  onPress={handleSubmit}
+                  title='LOGIN'
+                  buttonColor='#039BE5'
+                  disabled={!isValid || isSubmitting}
+                  loading={isSubmitting}
+                />
                 <ErrorMessage errorValue={errors.general} />
               </>
             )}

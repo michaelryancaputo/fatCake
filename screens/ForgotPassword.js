@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Yup from 'yup';
 
-import { FormButton, FormButtonContainer, FormInput } from '../components';
+import { Button, FormInput } from '../components';
 
 import { AppPageContainer } from '../components';
 import ErrorMessage from '../components/ErrorMessage';
@@ -59,15 +59,13 @@ class ForgotPassword extends React.Component {
                   onBlur={handleBlur('email')}
                 />
                 <ErrorMessage errorValue={touched.email && errors.email} />
-                <FormButtonContainer>
-                  <FormButton
-                    buttonType='outline'
-                    onPress={handleSubmit}
-                    title='Send Email'
-                    buttonColor='#039BE5'
-                    disabled={!isValid || isSubmitting}
-                  />
-                </FormButtonContainer>
+                <Button
+                  buttonType='outline'
+                  onPress={handleSubmit}
+                  title='Send Email'
+                  buttonColor='#039BE5'
+                  disabled={!isValid || isSubmitting}
+                />
                 <ErrorMessage errorValue={errors.general} />
               </>
             )}

@@ -1,9 +1,8 @@
 import * as React from 'react';
 import * as Yup from 'yup';
 
-import { AppPageContainer, ErrorMessage, FormButton, FormButtonContainer, FormInput } from '../components';
+import { AppPageContainer, Button, ErrorMessage, FormInput } from '../components';
 
-import { Button } from 'react-native-elements';
 import Firebase from '../firebase';
 import { Formik } from 'formik';
 import { Ionicons } from '@expo/vector-icons';
@@ -166,16 +165,14 @@ class Signup extends React.Component {
                 <ErrorMessage
                   errorValue={touched.confirmPassword && errors.confirmPassword}
                 />
-                <FormButtonContainer>
-                  <FormButton
-                    buttonType='outline'
-                    onPress={handleSubmit}
-                    title='SIGNUP'
-                    buttonColor='#F57C00'
-                    disabled={!isValid || isSubmitting}
-                    loading={isSubmitting}
-                  />
-                </FormButtonContainer>
+                <Button
+                  buttonType='outline'
+                  onPress={handleSubmit}
+                  title='SIGNUP'
+                  buttonColor='#F57C00'
+                  disabled={!isValid || isSubmitting}
+                  loading={isSubmitting}
+                />
                 <ErrorMessage errorValue={errors.general} />
               </>
             )}

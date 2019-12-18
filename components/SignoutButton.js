@@ -1,7 +1,7 @@
 import * as React from 'react';
 
+import Button from './Button';
 import Firebase from '../firebase';
-import FormButton from './FormButton';
 
 class SignoutButton extends React.Component {
   handleSignout = async () => {
@@ -14,7 +14,7 @@ class SignoutButton extends React.Component {
   };
 
   render() {
-    return <FormButton
+    return <Button
       title='Signout'
       buttonType='outline'
       buttonColor='#F57C00'

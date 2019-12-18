@@ -3,8 +3,8 @@ import * as React from 'react';
 import { Image, KeyboardAvoidingView, Modal, TextInput } from 'react-native';
 
 import { AppPageContainer } from './AppContainer';
+import Button from './Button';
 import Firebase from '../firebase';
-import FormButton from './FormButton';
 
 class AddPhotoModal extends React.Component {
   constructor(props) {
@@ -61,8 +61,8 @@ class AddPhotoModal extends React.Component {
           onChangeText={text => this.setState({ text })}
         />
         <KeyboardAvoidingView behavior="padding" enabled>
-          <FormButton onPress={this.onSave} title="Save" />
-          <FormButton onPress={this.closeModal} title="Close" />
+          <Button onPress={this.onSave} title="Save" />
+          <Button onPress={this.closeModal} title="Close" />
         </KeyboardAvoidingView>
       </AppPageContainer>
     </Modal>;

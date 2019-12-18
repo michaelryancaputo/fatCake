@@ -3,13 +3,12 @@ import * as Permissions from 'expo-permissions';
 import * as React from 'react';
 import * as Yup from 'yup';
 
-import { ActivityIndicator, AppPageContainer, Photo, SignoutButton } from '../components';
+import { ActivityIndicator, AppPageContainer, Button, Photo, SignoutButton } from '../components';
 import { Text, View } from 'react-native';
 
 import Constants from 'expo-constants';
 import ErrorMessage from '../components/ErrorMessage';
 import Firebase from '../firebase';
-import FormButton from '../components/FormButton';
 import FormInput from '../components/FormInput';
 import { Formik } from 'formik';
 import { getPermission } from "../utils";
@@ -144,13 +143,13 @@ class Profile extends React.Component {
                 />
                 <ErrorMessage errorValue={touched.email && errors.email} />
 
-                <FormButton
+                <Button
                   onPress={() => this.pickImage(handleChange('photoUrl'))}
                   title="Choose a profile photo"
                 />
 
                 <View>
-                  <FormButton
+                  <Button
                     onPress={handleSubmit}
                     title='Save'
                     buttonColor='#F57C00'
@@ -165,7 +164,7 @@ class Profile extends React.Component {
           }}
         </Formik>
         <SignoutButton {...this.props} />
-        <FormButton
+        <Button
           buttonType='outline'
           buttonColor='#F57C00'
           onPress={this.handleDelete}
