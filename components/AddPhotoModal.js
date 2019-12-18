@@ -12,7 +12,7 @@ class AddPhotoModal extends React.Component {
 
     state = {
       text: undefined
-    }
+    };
 
     this.onSave = this.onSave.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -23,25 +23,25 @@ class AddPhotoModal extends React.Component {
     const { newImageUri: localUri, location } = this.props;
 
     if (!location) {
-      alert('Location was not found.')
+      alert('Location was not found.');
     } else if (!text) {
-      alert('Description is not valid.')
+      alert('Description is not valid.');
     } else if (!localUri) {
-      alert('There was a problem with your image')
+      alert('There was a problem with your image');
     } else {
       this.closeModal();
       const output = await Firebase.shared.postEvent({ text: text.trim(), localUri, location });
 
       if (output) {
-        alert('Your photo counted towards the leaderboard! nice')
+        alert('Your photo counted towards the leaderboard! nice');
       } else {
-        alert('You were not close to a bakery. Try again :(')
+        alert('You were not close to a bakery. Try again :(');
       }
     }
 
-  }
+  };
 
-  closeModal = () => this.props.setModalVisible(false)
+  closeModal = () => this.props.setModalVisible(false);
 
   render() {
     return <Modal
@@ -65,7 +65,7 @@ class AddPhotoModal extends React.Component {
           <FormButton onPress={this.closeModal} title="Close" />
         </KeyboardAvoidingView>
       </AppPageContainer>
-    </Modal>
+    </Modal>;
   }
 }
 

@@ -9,6 +9,6 @@ const getPermission = async (permission) => {
     return false;
   }
   return true;
-}
+};
 
 export default getPermission;

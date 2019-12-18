@@ -19,9 +19,9 @@ const transformLeaderboard = (photoList, userList) => {
     return {
       ...acc,
       [userList[key].displayName]: acc[key] ? acc[key] + 1 : 1
-    }
-  }, {})
-}
+    };
+  }, {});
+};
 
 const Leaderboard = (props) => {
   const [userList, userListLoading, userListError] = getUserList();
@@ -30,11 +30,11 @@ const Leaderboard = (props) => {
   if (photoListError || userListError) {
     return <AppPageContainer {...props} heading={`Leaderboard`}>
       <ListText>There was an error!</ListText>
-    </AppPageContainer>
+    </AppPageContainer>;
   }
 
   if (userListLoading || photoListLoading) {
-    return <ActivityIndicator />
+    return <ActivityIndicator />;
   }
 
   const leaderboardList = transformLeaderboard(photoList, userList);
@@ -44,9 +44,9 @@ const Leaderboard = (props) => {
       const value = leaderboardList[key];
       return <ListItem key={key}>
         <ListText>{key} - {value}</ListText>
-      </ListItem>
+      </ListItem>;
     })}
-  </AppPageContainer>
-}
+  </AppPageContainer>;
+};
 
 export default Leaderboard;

@@ -1,32 +1,32 @@
-import * as React from 'react'
-import * as Yup from 'yup'
+import * as React from 'react';
+import * as Yup from 'yup';
 
 import { FormButton, FormButtonContainer, FormInput } from '../components';
 
 import { AppPageContainer } from '../components';
-import ErrorMessage from '../components/ErrorMessage'
-import Firebase from '../firebase'
-import { Formik } from 'formik'
+import ErrorMessage from '../components/ErrorMessage';
+import Firebase from '../firebase';
+import { Formik } from 'formik';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .label('Email')
     .email('Enter a valid email')
     .required('Please enter a registered email')
-})
+});
 
 class ForgotPassword extends React.Component {
   handlePasswordReset = async (values, actions) => {
     const { email } = values;
 
     try {
-      await Firebase.shared.passwordReset(email)
-      console.log('Password reset email sent successfully')
-      this.props.navigation.navigate('Login')
+      await Firebase.shared.passwordReset(email);
+      console.log('Password reset email sent successfully');
+      this.props.navigation.navigate('Login');
     } catch (error) {
-      actions.setFieldError('general', error.message)
+      actions.setFieldError('general', error.message);
     }
-  }
+  };
 
   render() {
     return (
@@ -34,7 +34,7 @@ class ForgotPassword extends React.Component {
         <Formik
           initialValues={{ email: '' }}
           onSubmit={(values, actions) => {
-            this.handlePasswordReset(values, actions)
+            this.handlePasswordReset(values, actions);
           }}
           validationSchema={validationSchema}>
           {({
@@ -73,7 +73,7 @@ class ForgotPassword extends React.Component {
             )}
         </Formik>
       </AppPageContainer>
-    )
+    );
   }
 }
 

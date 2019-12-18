@@ -1,7 +1,7 @@
-import ForgotPassword from '../screens/ForgotPassword'
-import Login from '../screens/Login'
-import Signup from '../screens/Signup'
-import { createStackNavigator } from 'react-navigation-stack'
+import ForgotPassword from '../screens/ForgotPassword';
+import Login from '../screens/Login';
+import Signup from '../screens/Signup';
+import { createStackNavigator } from 'react-navigation-stack';
 
 const AuthNavigation = createStackNavigator(
   {
@@ -13,6 +13,6 @@ const AuthNavigation = createStackNavigator(
     initialRouteName: 'Login',
     headerMode: 'none'
   }
-)
+);
 
-export default AuthNavigation
+export default AuthNavigation;

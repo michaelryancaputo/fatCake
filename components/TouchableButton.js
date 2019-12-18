@@ -16,10 +16,10 @@ const TouchableText = styled.Text`
   font-size: 12;
   font-weight: bold;
   text-align: center;
-`
+`;
 
 export default ({ children = 'Button', ...rest }) => <TouchableButton {...rest}>
   <TouchableText>
     {children}
   </TouchableText>
-</TouchableButton>
+</TouchableButton>;

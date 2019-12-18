@@ -3,7 +3,7 @@ import * as Permissions from 'expo-permissions';
 import * as React from 'react';
 
 import { DynamicMap } from '../components';
-import MapView from 'react-native-maps'
+import MapView from 'react-native-maps';
 import Pedestrian from '../assets/images/pedestrian.png';
 import _ from 'lodash';
 
@@ -42,7 +42,7 @@ class Map extends React.Component {
         image={Pedestrian}
         width={10}
         height={10}
-      />
+      />;
   }
 
   render() {
@@ -50,7 +50,7 @@ class Map extends React.Component {
       <DynamicMap location={this.state.location}>
         {this.renderSelf()}
       </DynamicMap>
-    )
+    );
   }
 }
 

@@ -17,10 +17,10 @@ export const AppPageContainer = props => {
                 <Heading>{props.heading}</Heading>
                 {props.children}
             </AppContainer>
-        </ScrollView>
+        </ScrollView>;
     }
 
-    return <AppContainer {...props} />
-}
+    return <AppContainer {...props} />;
+};
 
 export default AppContainer;

@@ -6,13 +6,13 @@ import {
   Button,
   Text,
 } from 'react-native';
-import { ClusterContainer, ClusterCounterText, MapContainer, MapViewPopout, StyledMapView } from './index'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import { ClusterContainer, ClusterCounterText, MapContainer, MapViewPopout, StyledMapView } from './index';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 import AddPhotoModal from './AddPhotoModal';
-import Constants from 'expo-constants'
+import Constants from 'expo-constants';
 import Croissant from '../assets/images/croissant.png';
-import Firebase from '../firebase'
+import Firebase from '../firebase';
 import MapButton from './MapButton';
 import _ from 'lodash';
 import { getPermission } from "../utils";
@@ -30,7 +30,7 @@ const convertToReadableLocations = queryLocations => _.reduce(queryLocations, (a
   },
   address: d.address,
   name: d.name
-}], [])
+}], []);
 
 class DynamicMap extends React.Component {
   constructor(props) {
@@ -48,7 +48,7 @@ class DynamicMap extends React.Component {
     };
 
     this.onRegionChange = this.onRegionChange.bind(this);
-    this.onRegionChangeDelayed = _.debounce(this.onRegionChange, 2000)
+    this.onRegionChangeDelayed = _.debounce(this.onRegionChange, 2000);
     this.onCenterLocation = this.onCenterLocation.bind(this);
     this.addPhoto = this.addPhoto.bind(this);
     this.setModalVisible = this.setModalVisible.bind(this);
@@ -65,7 +65,7 @@ class DynamicMap extends React.Component {
     const queryResult = await Firebase.shared.getAllDocuments('locations');
     const locations = convertToReadableLocations(queryResult);
     this.setState({ locations });
-  }
+  };
 
   onRegionChange(region) {
     this.setState({ region });
@@ -83,7 +83,7 @@ class DynamicMap extends React.Component {
           latitudeDelta,
           longitudeDelta,
         }
-      }
+      };
     });
   }
 
@@ -97,10 +97,10 @@ class DynamicMap extends React.Component {
         await ImagePicker.launchImageLibraryAsync(options);
 
       if (!result.cancelled) {
-        this.setModalVisible(true, { newImageUri: result.uri })
+        this.setModalVisible(true, { newImageUri: result.uri });
       }
     }
-  }
+  };
 
 
   setModalVisible = (visible, options = {}) => {
@@ -108,7 +108,7 @@ class DynamicMap extends React.Component {
       options['newImageUri'] = undefined;
     }
     this.setState({ addPhotoModalVisible: visible, ...options });
-  }
+  };
 
   renderCluster = (cluster, onPress) => {
     const pointCount = cluster.pointCount;
@@ -126,8 +126,8 @@ class DynamicMap extends React.Component {
           </ClusterCounterText>
         </ClusterContainer>
       </MapView.Marker>
-    )
-  }
+    );
+  };
 
   renderMarker = (data) => {
     const link = () => openMap.createOpenLink(data.location);
@@ -145,8 +145,8 @@ class DynamicMap extends React.Component {
           <Button title={data.address} onPress={link} />
         </MapViewPopout>
       </MapView.Callout>
-    </MapView.Marker>
-  }
+    </MapView.Marker>;
+  };
 
   render() {
     return (
@@ -159,7 +159,7 @@ class DynamicMap extends React.Component {
         />
         <MapContainer>
           <StyledMapView
-            ref={(r) => { this.map = r }}
+            ref={(r) => { this.map = r; }}
             provider={undefined}
             data={this.state.locations}
             initialRegion={this.state.region}
@@ -179,12 +179,12 @@ class DynamicMap extends React.Component {
           </>
         }
       </>
-    )
+    );
   }
 }
 
 DynamicMap.defaultProps = {
   location: undefined
-}
+};
 
 export default DynamicMap;

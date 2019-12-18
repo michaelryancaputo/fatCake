@@ -65,7 +65,7 @@ class FeedScreen extends React.Component {
   render() {
 
     if (this.state.loading) {
-      return <ActivityIndicator />
+      return <ActivityIndicator />;
     }
 
     LayoutAnimation.easeInEaseOut();

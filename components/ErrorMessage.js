@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'react';
 
 import styled from 'styled-components/native';
 
@@ -17,4 +17,4 @@ const ErrorMessage = ({ errorValue }) => errorValue ? (
   </ErrorContainer>
 ) : null;
 
-export default ErrorMessage
+export default ErrorMessage;

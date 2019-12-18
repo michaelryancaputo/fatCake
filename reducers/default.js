@@ -12,7 +12,7 @@ const counterReducer = (state = initialState, action) => {
         ...state,
         // Redux Store
         counter: state.counter + 1,
-      }
+      };
     }
 
     // Decrease Counter
@@ -22,7 +22,7 @@ const counterReducer = (state = initialState, action) => {
         ...state,
         // Redux Store
         counter: state.counter - 1,
-      }
+      };
     }
 
     // Default

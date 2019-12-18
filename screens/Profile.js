@@ -1,17 +1,17 @@
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import * as React from 'react';
-import * as Yup from 'yup'
+import * as Yup from 'yup';
 
 import { ActivityIndicator, AppPageContainer, Photo, SignoutButton } from '../components';
-import { Text, View } from 'react-native'
+import { Text, View } from 'react-native';
 
 import Constants from 'expo-constants';
-import ErrorMessage from '../components/ErrorMessage'
-import Firebase from '../firebase'
-import FormButton from '../components/FormButton'
-import FormInput from '../components/FormInput'
-import { Formik } from 'formik'
+import ErrorMessage from '../components/ErrorMessage';
+import Firebase from '../firebase';
+import FormButton from '../components/FormButton';
+import FormInput from '../components/FormInput';
+import { Formik } from 'formik';
 import { getPermission } from "../utils";
 
 const options = {
@@ -27,7 +27,7 @@ const validationSchema = Yup.object().shape({
     .label('Email')
     .email('Enter a valid email')
     .required('Please enter a registered email'),
-})
+});
 
 class Profile extends React.Component {
   state = {
@@ -39,7 +39,7 @@ class Profile extends React.Component {
       phoneNumber: undefined,
       photoUrl: undefined,
     }
-  }
+  };
 
   pickImage = async (handleChange) => {
     const permissionType = Constants.isDevice ? Permissions.CAMERA : Permissions.CAMERA_ROLL;
@@ -57,26 +57,26 @@ class Profile extends React.Component {
           userData: {
             photoUrl
           }
-        })
+        });
       }
     }
-  }
+  };
 
   handleDelete = async () => {
     Firebase.shared.deleteUser(this.state.uid).then(() => {
-      this.props.navigation.navigate('App')
+      this.props.navigation.navigate('App');
     }).catch(() => {
-      actions.setFieldError('general', 'There was a problem deleting your account.')
-    })
-  }
+      actions.setFieldError('general', 'There was a problem deleting your account.');
+    });
+  };
 
   getUserData = async () => {
     const userData = await Firebase.shared.getCurrentUser();
     this.setState({
       uid: userData.uid,
       userData: userData
-    })
-  }
+    });
+  };
 
   componentDidMount() {
     this.getUserData();
@@ -85,19 +85,19 @@ class Profile extends React.Component {
   handleOnModifyUser = async (values, actions) => {
     const { displayName, email, phoneNumber, photoUrl } = values;
     try {
-      const options = { displayName, email, phoneNumber, photoUrl }
-      await Firebase.shared.updateUser(options)
+      const options = { displayName, email, phoneNumber, photoUrl };
+      await Firebase.shared.updateUser(options);
     } catch (error) {
-      actions.setFieldError('general', error.message)
+      actions.setFieldError('general', error.message);
     } finally {
-      actions.setSubmitting(false)
+      actions.setSubmitting(false);
       this.getUserData();
     }
-  }
+  };
 
   render() {
     if (this.state.uid === undefined) {
-      return <ActivityIndicator />
+      return <ActivityIndicator />;
     }
 
     return (
@@ -161,7 +161,7 @@ class Profile extends React.Component {
                 <ErrorMessage errorValue={errors.general} />
 
               </>
-            )
+            );
           }}
         </Formik>
         <SignoutButton {...this.props} />
@@ -173,9 +173,9 @@ class Profile extends React.Component {
         />
 
       </AppPageContainer>
-    )
+    );
   }
 }
 
-export default Profile
+export default Profile;
 

@@ -14,6 +14,6 @@ const List = ({ onPressFooter, ...props }) => {
       {...props}
     />
   );
-}
+};
 
 export default List;

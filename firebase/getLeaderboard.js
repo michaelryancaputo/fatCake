@@ -1,4 +1,4 @@
-import Firebase, { userCollectionName } from './index';
+import Firebase, { eventCollectionName } from './index';
 
 import _ from 'lodash';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
@@ -19,6 +19,6 @@ const getLeaderboard = (filterProximity = false) => {
 
   return [photoList, photoListLoading, photoListError];
 
-}
+};
 
 export default getLeaderboard;

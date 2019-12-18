@@ -1,13 +1,13 @@
-import * as React from 'react'
-import * as Yup from 'yup'
+import * as React from 'react';
+import * as Yup from 'yup';
 
 import { AppPageContainer, ErrorMessage, FormButton, FormButtonContainer, FormInput } from '../components';
 
-import { Button } from 'react-native-elements'
-import Firebase from '../firebase'
-import { Formik } from 'formik'
-import { Ionicons } from '@expo/vector-icons'
-import { TouchableOpacity } from 'react-native'
+import { Button } from 'react-native-elements';
+import Firebase from '../firebase';
+import { Formik } from 'formik';
+import { Ionicons } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native';
 
 const validationSchema = Yup.object().shape({
   displayName: Yup.string()
@@ -25,7 +25,7 @@ const validationSchema = Yup.object().shape({
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password')], 'Confirm Password must matched Password')
     .required('Confirm Password is required'),
-})
+});
 
 class Signup extends React.Component {
   state = {
@@ -33,48 +33,48 @@ class Signup extends React.Component {
     confirmPasswordVisibility: true,
     passwordIcon: 'ios-eye',
     confirmPasswordIcon: 'ios-eye'
-  }
+  };
 
-  goToLogin = () => this.props.navigation.navigate('Login')
+  goToLogin = () => this.props.navigation.navigate('Login');
 
   handlePasswordVisibility = () => {
     this.setState(prevState => ({
       passwordIcon:
         prevState.passwordIcon === 'ios-eye' ? 'ios-eye-off' : 'ios-eye',
       passwordVisibility: !prevState.passwordVisibility
-    }))
-  }
+    }));
+  };
 
   handleConfirmPasswordVisibility = () => {
     this.setState(prevState => ({
       confirmPasswordIcon:
         prevState.confirmPasswordIcon === 'ios-eye' ? 'ios-eye-off' : 'ios-eye',
       confirmPasswordVisibility: !prevState.confirmPasswordVisibility
-    }))
-  }
+    }));
+  };
 
   handleOnSignup = async (values, actions) => {
-    const { displayName, email, password } = values
+    const { displayName, email, password } = values;
 
     try {
       const response = await Firebase.shared.signupWithEmail(
         email,
         password
-      )
+      );
 
       if (response.user.uid) {
-        const { uid } = response.user
-        await Firebase.shared.createNewUser({ email, displayName, uid })
-        await Firebase.shared.updateUser({ displayName })
-        this.props.navigation.navigate('App')
+        const { uid } = response.user;
+        await Firebase.shared.createNewUser({ email, displayName, uid });
+        await Firebase.shared.updateUser({ displayName });
+        this.props.navigation.navigate('App');
       }
     } catch (error) {
       // console.error(error)
-      actions.setFieldError('general', error.message)
+      actions.setFieldError('general', error.message);
     } finally {
-      actions.setSubmitting(false)
+      actions.setSubmitting(false);
     }
-  }
+  };
 
   render() {
     const {
@@ -82,7 +82,7 @@ class Signup extends React.Component {
       confirmPasswordVisibility,
       passwordIcon,
       confirmPasswordIcon
-    } = this.state
+    } = this.state;
     return (
       <AppPageContainer heading="Sign Up">
         <Formik
@@ -189,7 +189,7 @@ class Signup extends React.Component {
           type='clear'
         />
       </AppPageContainer>
-    )
+    );
   }
 }
 

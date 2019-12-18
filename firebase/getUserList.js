@@ -17,13 +17,13 @@ const getUserList = () => {
       return {
         ...acc,
         [uid]: rest
-      }
+      };
     }
-    return acc
-  }, {})
+    return acc;
+  }, {});
 
 
-  return [output, userListLoading, userListError]
-}
+  return [output, userListLoading, userListError];
+};
 
 export default getUserList;

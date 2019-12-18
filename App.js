@@ -1,8 +1,8 @@
-import * as React from 'react'
+import * as React from 'react';
 
 import { persistor, store } from './store/store';
 
-import MainApp from './navigation'
+import MainApp from './navigation';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 
@@ -14,6 +14,6 @@ const App = () => {
       </PersistGate>
     </Provider>
   );
-}
+};
 
 export default App;

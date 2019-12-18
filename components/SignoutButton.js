@@ -1,17 +1,17 @@
-import * as React from 'react'
+import * as React from 'react';
 
-import Firebase from '../firebase'
-import FormButton from './FormButton'
+import Firebase from '../firebase';
+import FormButton from './FormButton';
 
 class SignoutButton extends React.Component {
   handleSignout = async () => {
     try {
-      await Firebase.shared.signOut()
-      this.props.navigation.navigate('Auth')
+      await Firebase.shared.signOut();
+      this.props.navigation.navigate('Auth');
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   render() {
     return <FormButton
@@ -20,7 +20,7 @@ class SignoutButton extends React.Component {
       buttonColor='#F57C00'
       onPress={this.handleSignout}
       type='clear'
-    />
+    />;
   }
 }
 

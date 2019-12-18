@@ -1,16 +1,16 @@
-import * as React from 'react'
-import * as Yup from 'yup'
+import * as React from 'react';
+import * as Yup from 'yup';
 
 import { AppPageContainer, FormButtonContainer } from '../components';
 
-import { Button } from 'react-native-elements'
-import ErrorMessage from '../components/ErrorMessage'
-import Firebase from '../firebase'
-import FormButton from '../components/FormButton'
-import FormInput from '../components/FormInput'
-import { Formik } from 'formik'
-import { Ionicons } from '@expo/vector-icons'
-import { TouchableOpacity } from 'react-native'
+import { Button } from 'react-native-elements';
+import ErrorMessage from '../components/ErrorMessage';
+import Firebase from '../firebase';
+import FormButton from '../components/FormButton';
+import FormInput from '../components/FormInput';
+import { Formik } from 'formik';
+import { Ionicons } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -21,47 +21,47 @@ const validationSchema = Yup.object().shape({
     .label('Password')
     .required()
     .min(6, 'Password must have at least 6 characters ')
-})
+});
 
 class Login extends React.Component {
   state = {
     passwordVisibility: true,
     rightIcon: 'ios-eye'
-  }
+  };
 
-  goToSignup = () => this.props.navigation.navigate('Signup')
-  goToForgotPassword = () => this.props.navigation.navigate('ForgotPassword')
+  goToSignup = () => this.props.navigation.navigate('Signup');
+  goToForgotPassword = () => this.props.navigation.navigate('ForgotPassword');
 
   handlePasswordVisibility = () => {
     this.setState(prevState => ({
       rightIcon: prevState.rightIcon === 'ios-eye' ? 'ios-eye-off' : 'ios-eye',
       passwordVisibility: !prevState.passwordVisibility
-    }))
-  }
+    }));
+  };
 
   handleOnLogin = async (values, actions) => {
-    const { email, password } = values
+    const { email, password } = values;
     try {
-      const response = await Firebase.shared.loginWithEmail(email, password)
+      const response = await Firebase.shared.loginWithEmail(email, password);
 
       if (response.user) {
-        this.props.navigation.navigate('App')
+        this.props.navigation.navigate('App');
       }
     } catch (error) {
-      actions.setFieldError('general', error.message)
+      actions.setFieldError('general', error.message);
     } finally {
-      actions.setSubmitting(false)
+      actions.setSubmitting(false);
     }
-  }
+  };
 
   render() {
-    const { passwordVisibility, rightIcon } = this.state
+    const { passwordVisibility, rightIcon } = this.state;
     return (
       <AppPageContainer heading="Login">
         <Formik
           initialValues={{ email: '', password: '' }}
           onSubmit={(values, actions) => {
-            this.handleOnLogin(values, actions)
+            this.handleOnLogin(values, actions);
           }}
           validationSchema={validationSchema}>
           {({
@@ -133,7 +133,7 @@ class Login extends React.Component {
           type='clear'
         />
       </AppPageContainer>
-    )
+    );
   }
 }
 

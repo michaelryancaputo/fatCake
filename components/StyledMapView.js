@@ -1,4 +1,4 @@
-import ClusteredMapView from 'react-native-maps-super-cluster'
+import ClusteredMapView from 'react-native-maps-super-cluster';
 import {
   Dimensions,
 } from 'react-native';

@@ -1,7 +1,7 @@
-import * as React from 'react'
+import * as React from 'react';
 
-import { Input } from 'react-native-elements'
-import { Ionicons } from '@expo/vector-icons'
+import { Input } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
 import styled from 'styled-components/native';
 
 const InputContainer = styled.View`
@@ -32,6 +32,6 @@ const FormInput = ({
         placeholder={placeholder}
       />
     </InputContainer>
-  )
+  );
 
-export default FormInput
+export default FormInput;

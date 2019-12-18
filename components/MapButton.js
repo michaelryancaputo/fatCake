@@ -7,6 +7,6 @@ const MapButton = styled(TouchableButton)`
   position: absolute;
   bottom: 20;
   ${props => props.left ? css`left: 10` : css`right: 10`}
-`
+`;
 
 export default MapButton;
