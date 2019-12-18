@@ -15,9 +15,7 @@ export const AppPageContainer = ({ children, heading, footer, headingLeft, headi
             {headingRight ? <Right>{headingRight}</Right> : <Right />}
         </Header>}
         <Content padder>
-            <Body>
-                {children}
-            </Body>
+            {children}
         </Content>
         {footer &&
             <Footer>

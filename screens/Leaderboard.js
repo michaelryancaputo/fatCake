@@ -1,24 +1,20 @@
 import { ActivityIndicator, AppPageContainer } from '../components';
+import { Body, Left, List, ListItem, Right, Text, Thumbnail } from 'native-base';
 
 import React from "react";
 import _ from 'lodash';
 import getLeaderboard from '../firebase/getUserList';
 import getUserList from '../firebase/getUserList';
-import styled from 'styled-components/native';
-
-const ListItem = styled.View`
-  padding: 10px;
-`;
-
-const ListText = styled.Text`
-  color: black;
-`;
 
 const transformLeaderboard = (photoList, userList) => {
   return _.reduce(photoList, (acc, item, key) => {
+    const user = userList[key];
     return {
       ...acc,
-      [userList[key].displayName]: acc[key] ? acc[key] + 1 : 1
+      [user.displayName]: {
+        count: acc[key] ? acc[key] + 1 : 1,
+        photoUrl: _.has(user, 'photoUrl') ? user.photoUrl : null
+      }
     };
   }, {});
 };
@@ -40,12 +36,23 @@ const Leaderboard = (props) => {
   const leaderboardList = transformLeaderboard(photoList, userList);
 
   return <AppPageContainer {...props} heading={`Leaderboard`}>
-    {Object.keys(leaderboardList).map(key => {
-      const value = leaderboardList[key];
-      return <ListItem key={key}>
-        <ListText>{key} - {value}</ListText>
-      </ListItem>;
-    })}
+    <List>
+      {Object.keys(leaderboardList).map(name => {
+        const { photoUrl, count } = leaderboardList[name];
+        return <ListItem avatar={!!photoUrl} key={name}>
+          {!!photoUrl ? <Left>
+            {photoUrl && <Thumbnail small source={{ uri: photoUrl }} />}
+          </Left> : null}
+          <Body>
+            <Text>{name}</Text>
+            <Text note>...</Text>
+          </Body>
+          <Right>
+            <Text>{count}</Text>
+          </Right>
+        </ListItem>;
+      })}
+    </List>
   </AppPageContainer>;
 };
 
