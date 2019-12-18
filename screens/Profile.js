@@ -4,13 +4,14 @@ import * as React from 'react';
 import * as Yup from 'yup';
 
 import { ActivityIndicator, AppPageContainer, Button, Photo, SignoutButton } from '../components';
-import { Text, View } from 'react-native';
+import { Card, CardItem } from 'native-base';
 
 import Constants from 'expo-constants';
 import ErrorMessage from '../components/ErrorMessage';
 import Firebase from '../firebase';
 import FormInput from '../components/FormInput';
 import { Formik } from 'formik';
+import { View } from 'react-native';
 import { getPermission } from "../utils";
 
 const options = {
@@ -101,8 +102,12 @@ class Profile extends React.Component {
 
     return (
       <AppPageContainer heading="Profile">
-        {this.state.userData.photoUrl && <Photo uri={this.state.userData.photoUrl}
-        />
+        {this.state.userData.photoUrl &&
+          <Card style={{ marginBottom: 15 }}>
+            <CardItem cardBody>
+              <Photo uri={this.state.userData.photoUrl} />
+            </CardItem>
+          </Card>
         }
         <Formik
           initialValues={this.state.userData}
