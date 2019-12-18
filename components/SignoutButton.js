@@ -3,26 +3,22 @@ import * as React from 'react';
 import Button from './Button';
 import Firebase from '../firebase';
 
-class SignoutButton extends React.Component {
-  handleSignout = async () => {
+const SignoutButton = ({ navigation, ...props }) => {
+  const handleSignout = async () => {
     try {
       await Firebase.shared.signOut();
-      this.props.navigation.navigate('Auth');
+      props.navigation.navigate('Auth');
     } catch (error) {
       console.error(error);
     }
   };
 
-  render() {
-    return <Button
-      title='Signout'
-      buttonType='outline'
-      buttonColor='#F57C00'
-      onPress={this.handleSignout}
-      type='clear'
-    />;
-  }
-}
+  return <Button
+    title='Signout'
+    onPress={handleSignout}
+    {...props}
+  />;
+};
 
 export default SignoutButton;
 

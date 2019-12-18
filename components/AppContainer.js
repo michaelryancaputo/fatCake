@@ -1,23 +1,33 @@
 import * as React from 'react';
 
-import { Body, Container, Content, Header, Left, Right, Title } from 'native-base';
+import { Body, Container, Content, Footer, FooterTab, Header, Left, Right, Title } from 'native-base';
 
-export const AppPageContainer = ({ children, heading }) => {
+export const AppPageContainer = ({ children, heading, footer, headingLeft, headingRight }) => {
     return <Container>
         {heading && <Header>
-            <Left />
-            <Body>
-                {heading && <Title>
+            {headingLeft ? <Left>{headingLeft}</Left> : <Left />}
+            {heading && <Body>
+                <Title>
                     {heading}
-                </Title>}
+                </Title>
             </Body>
-            <Right />
+            }
+            {headingRight ? <Right>{headingRight}</Right> : <Right />}
         </Header>}
         <Content padder>
-            {children}
+            <Body>
+                {children}
+            </Body>
         </Content>
+        {footer &&
+            <Footer>
+                <FooterTab>
+                    {footer}
+                </FooterTab>
+            </Footer>
+        }
     </Container>;
 };
 
 
-export default AppPageContainer;
+export default AppPageContainer;;

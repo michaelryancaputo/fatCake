@@ -6,14 +6,18 @@ import {
   Button,
   Text,
 } from 'react-native';
-import { ClusterContainer, ClusterCounterText, MapContainer, MapViewPopout, StyledMapView } from './index';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 import AddPhotoModal from './AddPhotoModal';
+import ClusterContainer from './ClusterContainer';
+import ClusterCounterText from './ClusterCounterText';
 import Constants from 'expo-constants';
 import Croissant from '../assets/images/croissant.png';
 import Firebase from '../firebase';
 import MapButton from './MapButton';
+import MapContainer from './MapContainer';
+import MapViewPopout from './MapViewPopout';
+import StyledMapView from './StyledMapView';
 import _ from 'lodash';
 import { getPermission } from "../utils";
 import mapStyle from '../mapStyle.json';

@@ -6,12 +6,12 @@ import * as Yup from 'yup';
 import { ActivityIndicator, AppPageContainer, Button, Photo, SignoutButton } from '../components';
 import { Card, CardItem } from 'native-base';
 
+import { Alert } from 'react-native';
 import Constants from 'expo-constants';
 import ErrorMessage from '../components/ErrorMessage';
 import Firebase from '../firebase';
 import FormInput from '../components/FormInput';
 import { Formik } from 'formik';
-import { View } from 'react-native';
 import { getPermission } from "../utils";
 
 const options = {
@@ -63,18 +63,31 @@ class Profile extends React.Component {
   };
 
   handleDelete = async () => {
-    Firebase.shared.deleteUser(this.state.uid).then(() => {
-      this.props.navigation.navigate('App');
-    }).catch(() => {
-      actions.setFieldError('general', 'There was a problem deleting your account.');
-    });
+    Alert.alert(
+      'Delete Your Account',
+      'All of your data will be lost',
+      [
+        { text: 'No', onPress: () => { return; } },
+        {
+          text: 'Yes', onPress: () => {
+            Firebase.shared.deleteUser(this.state.uid).then(() => {
+              this.props.navigation.navigate('App');
+            }).catch(() => {
+              actions.setFieldError('general', 'There was a problem deleting your account.');
+            });
+
+          }
+        },
+      ],
+      { cancelable: false },
+    );
   };
 
   getUserData = async () => {
     const userData = await Firebase.shared.getCurrentUser();
     this.setState({
       uid: userData.uid,
-      userData: userData
+      userData
     });
   };
 
@@ -100,17 +113,12 @@ class Profile extends React.Component {
       return <ActivityIndicator />;
     }
 
+    const { userData } = this.state;
+
     return (
-      <AppPageContainer heading="Profile">
-        {this.state.userData.photoUrl &&
-          <Card style={{ marginBottom: 15 }}>
-            <CardItem cardBody>
-              <Photo uri={this.state.userData.photoUrl} />
-            </CardItem>
-          </Card>
-        }
+      <AppPageContainer heading="Profile" headingRight={<SignoutButton transparent  {...this.props} />}>
         <Formik
-          initialValues={this.state.userData}
+          initialValues={userData}
           onSubmit={this.handleOnModifyUser}
           validationSchema={validationSchema}>
           {({
@@ -126,13 +134,32 @@ class Profile extends React.Component {
           }) => {
             return (
               <>
+                {userData.photoUrl ?
+                  <Card style={{ marginBottom: 30 }}>
+                    <CardItem cardBody>
+                      <Photo uri={userData.photoUrl} />
+                    </CardItem>
+                    <CardItem footer>
+                      <Button
+                        transparent
+                        small
+                        onPress={() => this.pickImage(handleChange('photoUrl'))}
+                        title="Change your profile photo"
+                      />
+                    </CardItem>
+                  </Card>
+                  :
+                  <Button
+                    onPress={() => this.pickImage(handleChange('photoUrl'))}
+                    title="Choose a profile photo"
+                  />
+                }
                 <FormInput
                   name='displayName'
                   value={values.displayName}
                   onChangeText={handleChange('displayName')}
                   placeholder='Enter your full name'
                   iconName='md-person'
-                  iconColor='#2C384A'
                   onBlur={handleBlur('displayName')}
                 />
                 <ErrorMessage errorValue={touched.displayName && errors.displayName} />
@@ -143,40 +170,29 @@ class Profile extends React.Component {
                   placeholder='Enter email'
                   autoCapitalize='none'
                   iconName='ios-mail'
-                  iconColor='#2C384A'
                   onBlur={handleBlur('email')}
                 />
                 <ErrorMessage errorValue={touched.email && errors.email} />
 
                 <Button
-                  onPress={() => this.pickImage(handleChange('photoUrl'))}
-                  title="Choose a profile photo"
+                  title='Save'
+                  onPress={handleSubmit}
+                  disabled={!isValid || isSubmitting || !dirty}
+                  loading={isSubmitting}
                 />
-
-                <View>
-                  <Button
-                    onPress={handleSubmit}
-                    title='Save'
-                    buttonColor='#F57C00'
-                    disabled={!isValid || isSubmitting || !dirty}
-                    loading={isSubmitting}
-                  />
-                </View>
                 <ErrorMessage errorValue={errors.general} />
-
               </>
             );
           }}
         </Formik>
-        <SignoutButton {...this.props} />
+
         <Button
-          buttonType='outline'
-          buttonColor='#F57C00'
+          warning
           onPress={this.handleDelete}
-          title='DELETE'
+          title='Delete Your Account'
         />
 
-      </AppPageContainer>
+      </AppPageContainer >
     );
   }
 }
