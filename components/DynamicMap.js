@@ -2,10 +2,7 @@ import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
 import * as React from 'react';
 
-import {
-  Button,
-  Text,
-} from 'react-native';
+import { Button, Fab, Icon, Text } from 'native-base';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 import AddPhotoModal from './AddPhotoModal';
@@ -41,6 +38,7 @@ class DynamicMap extends React.Component {
     super(props);
 
     this.state = {
+      menuOpen: false,
       locations: [],
       addPhotoModalVisible: false,
       region: {
@@ -178,8 +176,20 @@ class DynamicMap extends React.Component {
         </MapContainer>
         {
           this.props.location && <>
-            <MapButton background="pink" left onPress={this.addPhoto}>Photo</MapButton>
-            <MapButton background="lightblue" onPress={this.onCenterLocation}>Center</MapButton>
+            <Fab
+              active={this.state.active}
+              direction="up"
+              style={{ backgroundColor: '#5067FF' }}
+              position="bottomLeft"
+              onPress={() => this.setState(state => ({ menuOpen: !state.menuOpen }))}>
+              <Icon name="arrow-up" />
+              <Button style={{ backgroundColor: '#3B5998' }} onPress={this.onCenterLocation}>
+                <Icon name="search" />
+              </Button>
+              <Button style={{ backgroundColor: '#DD5144' }} onPress={this.addPhoto}>
+                <Icon name="camera" />
+              </Button>
+            </Fab>
           </>
         }
       </>
