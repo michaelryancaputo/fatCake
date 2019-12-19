@@ -155,6 +155,7 @@ class Profile extends React.Component {
                   />
                 }
                 <FormInput
+                  error={touched.displayName && errors.displayName}
                   name='displayName'
                   value={values.displayName}
                   onChangeText={handleChange('displayName')}
@@ -162,8 +163,8 @@ class Profile extends React.Component {
                   iconName='md-person'
                   onBlur={handleBlur('displayName')}
                 />
-                <ErrorMessage errorValue={touched.displayName && errors.displayName} />
                 <FormInput
+                  error={touched.email && errors.email}
                   name='email'
                   value={values.email}
                   onChangeText={handleChange('email')}
@@ -172,8 +173,6 @@ class Profile extends React.Component {
                   iconName='ios-mail'
                   onBlur={handleBlur('email')}
                 />
-                <ErrorMessage errorValue={touched.email && errors.email} />
-
                 <Button
                   title='Save'
                   onPress={handleSubmit}

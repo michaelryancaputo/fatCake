@@ -49,6 +49,7 @@ class ForgotPassword extends React.Component {
           }) => (
               <>
                 <FormInput
+                  error={touched.email && errors.email}
                   name='email'
                   value={values.email}
                   onChangeText={handleChange('email')}
@@ -58,7 +59,6 @@ class ForgotPassword extends React.Component {
                   iconColor='#2C384A'
                   onBlur={handleBlur('email')}
                 />
-                <ErrorMessage errorValue={touched.email && errors.email} />
                 <Button
                   buttonType='outline'
                   onPress={handleSubmit}

@@ -71,6 +71,7 @@ const Login = (props) => {
         }) => (
             <>
               <FormInput
+                error={touched.email && errors.email}
                 name='email'
                 value={values.email}
                 onChangeText={handleChange('email')}
@@ -79,16 +80,16 @@ const Login = (props) => {
                 iconName='ios-mail'
                 onBlur={handleBlur('email')}
               />
-              <ErrorMessage errorValue={touched.email && errors.email} />
               <FormInput
+                error={touched.password && errors.password}
                 name='password'
                 value={values.password}
                 onChangeText={handleChange('password')}
                 placeholder='password'
                 iconName='ios-lock'
+                secureTextEntry={true}
                 onBlur={handleBlur('password')}
               />
-              <ErrorMessage errorValue={touched.password && errors.password} />
               <Button
                 buttonType='outline'
                 onPress={handleSubmit}

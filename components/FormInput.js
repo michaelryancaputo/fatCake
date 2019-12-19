@@ -13,9 +13,10 @@ const FormInput = ({
   iconName,
   iconColor = '#000',
   placeholder,
+  error = false,
   ...rest
 }) => (
-    <StyledItem floatingLabel>
+    <StyledItem floatingLabel error={!!error}>
       <Label>{placeholder}</Label>
       {iconName && <Icon name={iconName} style={{ marginRight: 10, fontSize: 20, color: iconColor }} />}
       <Input

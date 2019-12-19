@@ -106,6 +106,7 @@ class Signup extends React.Component {
           }) => (
               <>
                 <FormInput
+                  error={touched.displayName && errors.displayName}
                   name='displayName'
                   value={values.displayName}
                   onChangeText={handleChange('displayName')}
@@ -114,8 +115,8 @@ class Signup extends React.Component {
                   iconColor='#2C384A'
                   onBlur={handleBlur('displayName')}
                 />
-                <ErrorMessage errorValue={touched.displayName && errors.displayName} />
                 <FormInput
+                  error={touched.email && errors.email}
                   name='email'
                   value={values.email}
                   onChangeText={handleChange('email')}
@@ -125,8 +126,8 @@ class Signup extends React.Component {
                   iconColor='#2C384A'
                   onBlur={handleBlur('email')}
                 />
-                <ErrorMessage errorValue={touched.email && errors.email} />
                 <FormInput
+                  error={touched.password && errors.password}
                   name='password'
                   value={values.password}
                   onChangeText={handleChange('password')}
@@ -141,8 +142,8 @@ class Signup extends React.Component {
                     </TouchableOpacity>
                   }
                 />
-                <ErrorMessage errorValue={touched.password && errors.password} />
                 <FormInput
+                  error={touched.confirmPassword && errors.confirmPassword}
                   name='password'
                   value={values.confirmPassword}
                   onChangeText={handleChange('confirmPassword')}
@@ -161,9 +162,6 @@ class Signup extends React.Component {
                       />
                     </TouchableOpacity>
                   }
-                />
-                <ErrorMessage
-                  errorValue={touched.confirmPassword && errors.confirmPassword}
                 />
                 <Button
                   buttonType='outline'

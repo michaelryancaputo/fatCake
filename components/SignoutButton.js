@@ -7,7 +7,7 @@ const SignoutButton = ({ navigation, ...props }) => {
   const handleSignout = async () => {
     try {
       await Firebase.shared.signOut();
-      props.navigation.navigate('Auth');
+      navigation.navigate('Auth');
     } catch (error) {
       console.error(error);
     }
