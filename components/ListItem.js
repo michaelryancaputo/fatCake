@@ -1,8 +1,8 @@
-import { Image, View } from "react-native";
+import { Body, Button, Card, CardItem, Icon, Left, Right, Text, Thumbnail } from 'native-base';
 
-import Photo from './Photo';
+import { Image } from "react-native";
 import React from "react";
-import styled from 'styled-components';
+import { formatDistanceToNow } from 'date-fns';
 
 class ListItem extends React.Component {
   state = {
@@ -20,31 +20,48 @@ class ListItem extends React.Component {
   }
 
   render() {
-    const { text, name, imageWidth, imageHeight, image, user } = this.props;
+    const { timestamp, text, name, imageWidth, imageHeight, image: uri, user } = this.props;
 
+    console.log(this.props);
     // Reduce the name to something
     const imgW = imageWidth || this.state.width;
     const imgH = imageHeight || this.state.height;
     const aspect = imgW / imgH || 1;
 
-    return (
-      <View>
-        <Photo uri={image} />
-        <View style={{ padding: 12 }}>
-          <Text>{user.displayName || name}</Text>
-          <Subtitle>{text}</Subtitle>
-        </View>
-      </View>
-    );
+    return <Card>
+      <CardItem>
+        <Left>
+          {user.photoUrl ? <Thumbnail source={{ uri: user.photoUrl }} /> : null}
+          <Body>
+            <Text>{user.displayName || name}</Text>
+          </Body>
+          <Right>
+            <Text>{formatDistanceToNow(new Date(timestamp), { addSuffix: true })}</Text>
+          </Right>
+        </Left>
+      </CardItem>
+      <CardItem cardBody>
+        <Body>
+          <Image source={{ uri }} style={{ height: imageHeight, width: '100%', flex: 1 }} />
+          <Text>
+            {text}
+          </Text>
+        </Body>
+      </CardItem>
+      <CardItem>
+        <Left>
+          <Button transparent>
+            <Icon active name="thumbs-up" />
+            <Text>12</Text>
+          </Button>
+          <Button transparent>
+            <Icon active name="chatbubbles" />
+            <Text>4</Text>
+          </Button>
+        </Left>
+      </CardItem>
+    </Card>;
   }
 }
-
-const Text = styled.Text`
-  font-weight: 600;
-`;
-
-const Subtitle = styled.Text`
-  opacity: 0.8;
-`;
 
 export default ListItem;
