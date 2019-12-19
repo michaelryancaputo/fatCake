@@ -79,6 +79,7 @@ class DynamicMap extends React.Component {
     this.setState((state) => {
       const { latitudeDelta, longitudeDelta } = state.region;
       return {
+        menuOpen: false,
         region: {
           latitude,
           longitude,
@@ -90,6 +91,8 @@ class DynamicMap extends React.Component {
   }
 
   addPhoto = async () => {
+    this.setState({ menuOpen: false });
+
     const permissionType = Constants.isDevice ? Permissions.CAMERA : Permissions.CAMERA_ROLL;
     const status = await getPermission(permissionType);
 
@@ -151,6 +154,7 @@ class DynamicMap extends React.Component {
   };
 
   render() {
+    const { menuOpen } = this.state;
     return (
       <>
         <AddPhotoModal
@@ -177,11 +181,12 @@ class DynamicMap extends React.Component {
         {
           this.props.location && <>
             <Fab
-              active={this.state.active}
               direction="up"
-              style={{ backgroundColor: '#5067FF' }}
               position="bottomLeft"
-              onPress={() => this.setState(state => ({ menuOpen: !state.menuOpen }))}>
+              active={menuOpen}
+              style={{ backgroundColor: '#5067FF' }}
+              onPress={() => this.setState({ menuOpen: !menuOpen })}
+            >
               <Icon name="arrow-up" />
               <Button style={{ backgroundColor: '#3B5998' }} onPress={this.onCenterLocation}>
                 <Icon name="search" />
