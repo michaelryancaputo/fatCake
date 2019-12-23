@@ -1,35 +1,29 @@
 {
   "name": "functions",
+  "description": "Cloud Functions for Firebase",
   "scripts": {
-    "lint": "xo",
-    "watch": "parcel src/index.js --target node",
-    "build": "parcel build src/index.js --target node --detailed-report",
-    "serve": "yarn firebase serve --only functions",
-    "emulator": "yarn firebase emulators:start --only functions",
-    "shell": "yarn firebase functions:shell",
-    "start": "yarn run shell",
-    "predeploy": "yarn build",
-    "deploy": "yarn firebase deploy --only functions",
-    "logs": "yarn firebase functions:log"
+    "lint": "eslint .",
+    "serve": "firebase serve --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
   },
   "engines": {
     "node": "10"
   },
-  "main": "dist/index.js",
   "dependencies": {
+    "apollo-server-express": "^2.9.14",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
     "firebase-admin": "^8.9.0",
     "firebase-functions": "^3.3.0",
-    "apollo-server-express": "^2.9.14",
-    "express": "^4.17.1",
     "graphql": "^14.5.8"
   },
   "devDependencies": {
-    "tslint": "^5.20.1",
-    "typescript": "^3.7.3",
-    "firebase-functions-test": "^0.1.7",
-    "firebase-tools": "^7.11.0",
-    "parcel-bundler": "^1.12.4",
-    "xo": "^0.25.3"
+    "eslint": "^6.8.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "firebase-functions-test": "^0.1.7"
   },
   "private": true
 }

@@ -9,3 +9,6 @@ npm-debug.*
 *.orig.*
 web-build/
 web-report/
+/functions/.parcel-cache
+/functions/dist
+/functions/.cache
