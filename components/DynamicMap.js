@@ -58,7 +58,7 @@ class DynamicMap extends React.Component {
     this.getLocations = this.getLocations.bind(this);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.getLocations();
   }
 

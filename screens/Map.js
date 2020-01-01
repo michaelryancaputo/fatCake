@@ -13,7 +13,7 @@ class Map extends React.Component {
     errorMessage: null,
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.getUserLocationAsync();
   }
 
