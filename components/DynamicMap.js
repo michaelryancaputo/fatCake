@@ -10,8 +10,7 @@ import ClusterContainer from './ClusterContainer';
 import ClusterCounterText from './ClusterCounterText';
 import Constants from 'expo-constants';
 import Croissant from '../assets/images/croissant.png';
-import Firebase from '../firebase';
-import MapButton from './MapButton';
+import Firebase from '../api/firebase';
 import MapContainer from './MapContainer';
 import MapViewPopout from './MapViewPopout';
 import StyledMapView from './StyledMapView';
@@ -24,14 +23,14 @@ const options = {
   allowsEditing: true
 };
 
-const convertToReadableLocations = queryLocations => _.reduce(queryLocations, (acc, { d }) => [...acc, {
+const convertToReadableLocations = queryLocations => _.reduce(queryLocations, (acc, { d }) => [ ...acc, {
   location: {
     latitude: d.coordinates._lat,
     longitude: d.coordinates._long
   },
   address: d.address,
   name: d.name
-}], []);
+} ], []);
 
 class DynamicMap extends React.Component {
   constructor(props) {
@@ -110,7 +109,7 @@ class DynamicMap extends React.Component {
 
   setModalVisible = (visible, options = {}) => {
     if (!visible) {
-      options['newImageUri'] = undefined;
+      options[ 'newImageUri' ] = undefined;
     }
     this.setState({ addPhotoModalVisible: visible, ...options });
   };
@@ -137,11 +136,8 @@ class DynamicMap extends React.Component {
   renderMarker = (data) => {
     const link = () => openMap.createOpenLink(data.location);
     return <MapView.Marker key={data.name}
-      image={Croissant}
-      width={10}
-      height={10}
-      anchor={{ x: -.0025, y: -.0025 }}
-      coordinate={data.location}>
+      coordinate={data.location}
+    >
       <MapView.Callout>
         <MapViewPopout>
           <Text>

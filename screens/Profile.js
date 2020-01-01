@@ -9,7 +9,7 @@ import { Card, CardItem } from 'native-base';
 import { Alert } from 'react-native';
 import Constants from 'expo-constants';
 import ErrorMessage from '../components/ErrorMessage';
-import Firebase from '../firebase';
+import Firebase from '../api/firebase';
 import FormInput from '../components/FormInput';
 import { Formik } from 'formik';
 import { getPermission } from "../utils";

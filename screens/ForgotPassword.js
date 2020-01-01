@@ -5,7 +5,7 @@ import { Button, FormInput } from '../components';
 
 import { AppPageContainer } from '../components';
 import ErrorMessage from '../components/ErrorMessage';
-import Firebase from '../firebase';
+import Firebase from '../api/firebase';
 import { Formik } from 'formik';
 
 const validationSchema = Yup.object().shape({

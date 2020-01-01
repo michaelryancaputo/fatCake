@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 
 import { AppPageContainer, Button, ErrorMessage, FormInput } from '../components';
 
-import Firebase from '../firebase';
+import Firebase from '../api/firebase';
 import { Formik } from 'formik';
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
@@ -22,7 +22,7 @@ const validationSchema = Yup.object().shape({
     .required()
     .min(6, 'Password should be at least 6 characters '),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password')], 'Confirm Password must matched Password')
+    .oneOf([ Yup.ref('password') ], 'Confirm Password must matched Password')
     .required('Confirm Password is required'),
 });
 

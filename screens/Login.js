@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { AppPageContainer, Button } from '../components';
 
 import ErrorMessage from '../components/ErrorMessage';
-import Firebase from '../firebase';
+import Firebase from '../api/firebase';
 import FormInput from '../components/FormInput';
 import { Formik } from 'formik';
 

@@ -3,7 +3,7 @@ import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import { Container } from 'native-base';
-import Firebase from '../firebase';
+import Firebase from '../api/firebase';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 
@@ -15,6 +15,8 @@ class Initial extends React.Component {
   componentDidMount = async () => {
     try {
       this.loadLocalAsync();
+
+      console.log(Firebase);
 
       await Firebase.shared.checkUserAuth(user => {
         if (user) {

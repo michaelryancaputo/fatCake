@@ -1,7 +1,7 @@
 import { ActivityIndicator, List } from "../components";
 import { LayoutAnimation, RefreshControl } from "react-native";
 
-import Firebase from "../firebase";
+import Firebase from "../api/firebase";
 import React from "react";
 
 const PAGE_SIZE = 5;
@@ -50,7 +50,7 @@ class FeedScreen extends React.Component {
     // Iteratively add posts
     let posts = {};
     for (let child of data) {
-      posts[child.key] = child;
+      posts[ child.key ] = child;
     }
     this.addPosts(posts);
 

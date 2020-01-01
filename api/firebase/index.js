@@ -3,11 +3,11 @@ import 'firebase/firestore';
 
 import * as firebase from 'firebase';
 
-import { reduceImageAsync, uploadPhoto } from '../utils';
+import { reduceImageAsync, uploadPhoto } from '../../utils';
 
 import { GeoFirestore } from 'geofirestore';
 import _ from 'lodash';
-import firebaseConfig from './firebaseConfig';
+import firebaseConfig from '../firebaseConfig';
 import uuid from 'uuid';
 
 export const userCollectionName = 'users';
@@ -24,7 +24,7 @@ class Fire {
 
   // Download Data
   getPaged = async (collectionName, { size, start }, self = false) => {
-    let ref = this[collectionName].orderBy("timestamp", "desc").limit(size);
+    let ref = this[ collectionName ].orderBy("timestamp", "desc").limit(size);
     try {
       if (start) {
         ref = ref.startAfter(start);
@@ -51,7 +51,7 @@ class Fire {
         }
       });
 
-      const cursor = querySnapshot.docs[querySnapshot.docs.length - 1];
+      const cursor = querySnapshot.docs[ querySnapshot.docs.length - 1 ];
       return { data, cursor };
     } catch ({ message }) {
       alert(message);
@@ -93,7 +93,7 @@ class Fire {
           coords.latitude,
           coords.longitude
         ),
-        radius: .5
+        radius: 1
       });
 
       const list = await ref.get().then(value => value.docs);
@@ -169,6 +169,7 @@ class Fire {
   }
 
   checkUserAuth(user) {
+    console.log(user);
     return firebase.auth().onAuthStateChanged(user);
   }
 
@@ -237,10 +238,10 @@ class Fire {
 
     // Add a GeoDocument to a GeoCollection
     geocollection.add({
-      name: "Doughnut Alley",
-      address: "471 Magnolia Ave, Larkspur, CA 94939",
+      name: "Ritual Hayes Valley",
+      address: "432b Octavia St, San Francisco, CA 94102",
       score: 100,
-      coordinates: new firebase.firestore.GeoPoint(37.93557, -122.535477)
+      coordinates: new firebase.firestore.GeoPoint(37.776420, -122.424226)
     });
   };
 }

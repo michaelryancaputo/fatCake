@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import Button from './Button';
-import Firebase from '../firebase';
+import Firebase from '../api/firebase';
 
 const SignoutButton = ({ navigation, ...props }) => {
   const handleSignout = async () => {

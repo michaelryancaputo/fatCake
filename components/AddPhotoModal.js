@@ -4,7 +4,7 @@ import { Image, KeyboardAvoidingView, Modal, TextInput } from 'react-native';
 
 import { AppPageContainer } from './AppContainer';
 import Button from './Button';
-import Firebase from '../firebase';
+import Firebase from '../api/firebase';
 
 class AddPhotoModal extends React.Component {
   constructor(props) {
