@@ -169,7 +169,6 @@ class Fire {
   }
 
   checkUserAuth(user) {
-    console.log(user);
     return firebase.auth().onAuthStateChanged(user);
   }
 

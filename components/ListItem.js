@@ -22,7 +22,6 @@ class ListItem extends React.Component {
   render() {
     const { timestamp, text, name, imageWidth, imageHeight, image: uri, user } = this.props;
 
-    console.log(this.props);
     // Reduce the name to something
     const imgW = imageWidth || this.state.width;
     const imgH = imageHeight || this.state.height;

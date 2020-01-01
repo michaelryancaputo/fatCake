@@ -16,8 +16,6 @@ class Initial extends React.Component {
     try {
       this.loadLocalAsync();
 
-      console.log(Firebase);
-
       await Firebase.shared.checkUserAuth(user => {
         if (user) {
           this.props.navigation.navigate('App');
