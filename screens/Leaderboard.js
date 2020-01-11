@@ -3,17 +3,19 @@ import { Body, Left, List, ListItem, Right, Text, Thumbnail } from 'native-base'
 
 import React from "react";
 import _ from 'lodash';
-import getLeaderboard from '../api/firebase/getUserList';
+import getLeaderboard from '../api/firebase/getLeaderboard';
 import getUserList from '../api/firebase/getUserList';
 
 const transformLeaderboard = (photoList, userList) => {
-  return _.reduce(photoList, (acc, item, key) => {
+  return _.reduce(photoList, (acc, item) => {
+    const key = item.uid;
     const user = userList[ key ];
+
     return {
       ...acc,
-      [ user.displayName ]: {
-        count: acc[ key ] ? acc[ key ] + 1 : 1,
-        photoUrl: _.has(user, 'photoUrl') ? user.photoUrl : null
+      [ key ]: {
+        ...user,
+        count: _.has(acc[ key ], 'count') ? ++acc[ key ].count : 1,
       }
     };
   }, {});
@@ -37,14 +39,14 @@ const Leaderboard = (props) => {
 
   return <AppPageContainer {...props} heading={`Leaderboard`}>
     <List>
-      {Object.keys(leaderboardList).map(name => {
-        const { photoUrl, count } = leaderboardList[ name ];
-        return <ListItem avatar={!!photoUrl} key={name}>
+      {Object.keys(leaderboardList).map(key => {
+        const { photoUrl, count, displayName } = leaderboardList[ key ];
+        return <ListItem avatar={!!photoUrl} key={displayName}>
           {!!photoUrl ? <Left>
             {photoUrl && <Thumbnail small source={{ uri: photoUrl }} />}
           </Left> : null}
           <Body>
-            <Text>{name}</Text>
+            <Text>{displayName}</Text>
             <Text note>...</Text>
           </Body>
           <Right>
