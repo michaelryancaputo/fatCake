@@ -12,3 +12,4 @@ web-report/
 /functions/.parcel-cache
 /functions/dist
 /functions/.cache
+firebaseConfig.js
