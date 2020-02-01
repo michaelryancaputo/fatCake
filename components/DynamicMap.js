@@ -10,6 +10,7 @@ import ClusterContainer from './ClusterContainer';
 import ClusterCounterText from './ClusterCounterText';
 import Constants from 'expo-constants';
 import Croissant from '../assets/images/croissant.png';
+import DetailsPanel from './DetailsPanel';
 import Firebase from '../api/firebase';
 import MapContainer from './MapContainer';
 import MapViewPopout from './MapViewPopout';
@@ -17,7 +18,6 @@ import StyledMapView from './StyledMapView';
 import _ from 'lodash';
 import { getPermission } from "../utils";
 import mapStyle from '../mapStyle.json';
-import openMap from 'react-native-open-maps';
 
 const options = {
   allowsEditing: true
@@ -37,7 +37,7 @@ class DynamicMap extends React.Component {
     super(props);
 
     this.state = {
-      menuOpen: false,
+      activeMarker: undefined,
       locations: [],
       addPhotoModalVisible: false,
       region: {
@@ -78,7 +78,6 @@ class DynamicMap extends React.Component {
     this.setState((state) => {
       const { latitudeDelta, longitudeDelta } = state.region;
       return {
-        menuOpen: false,
         region: {
           latitude,
           longitude,
@@ -90,8 +89,6 @@ class DynamicMap extends React.Component {
   }
 
   addPhoto = async () => {
-    this.setState({ menuOpen: false });
-
     const permissionType = Constants.isDevice ? Permissions.CAMERA : Permissions.CAMERA_ROLL;
     const status = await getPermission(permissionType);
 
@@ -133,24 +130,18 @@ class DynamicMap extends React.Component {
     );
   };
 
+  setActiveMarker = (data) => {
+    this.set({ activeMarker: data });
+  };
+
   renderMarker = (data) => {
-    const link = () => openMap.createOpenLink(data.location);
     return <MapView.Marker key={data.name}
       coordinate={data.location}
-    >
-      <MapView.Callout>
-        <MapViewPopout>
-          <Text>
-            {data.name}
-          </Text>
-          <Button title={data.address} onPress={link} />
-        </MapViewPopout>
-      </MapView.Callout>
-    </MapView.Marker>;
+      onPress={() => this.setState({ activeMarker: data })}
+    />;
   };
 
   render() {
-    const { menuOpen } = this.state;
     return (
       <>
         <AddPhotoModal
@@ -179,20 +170,14 @@ class DynamicMap extends React.Component {
             <Fab
               direction="up"
               position="bottomLeft"
-              active={menuOpen}
               style={{ backgroundColor: '#5067FF' }}
-              onPress={() => this.setState({ menuOpen: !menuOpen })}
+              onPress={this.addPhoto}
             >
-              <Icon name="arrow-up" />
-              <Button style={{ backgroundColor: '#3B5998' }} onPress={this.onCenterLocation}>
-                <Icon name="search" />
-              </Button>
-              <Button style={{ backgroundColor: '#DD5144' }} onPress={this.addPhoto}>
-                <Icon name="camera" />
-              </Button>
+              <Icon name="camera" />
             </Fab>
           </>
         }
+        {this.state.activeMarker && <DetailsPanel {...this.state.activeMarker} />}
       </>
     );
   }
@@ -202,4 +187,4 @@ DynamicMap.defaultProps = {
   location: undefined
 };
 
-export default DynamicMap;
+export default DynamicMap;;
