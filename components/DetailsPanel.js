@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import * as React from 'react';
+
 import {
   StyleSheet,
   Text,
@@ -27,18 +28,30 @@ const Header = () => (
 );
 
 const ActionsPanel = (props) => {
-  const refSheet = useRef();
+  const { name, location, content, lastClicked } = props;
+  // const link = () => openMap.createOpenLink(location);
 
-  // need to detect if new props are passed, and trigger the sheet to appear again
-  //  onPress={() => refSheet.current.snapTo(1)}
+  const refSheet = React.useRef();
+  const firstUpdate = React.useRef(true);
 
-  const { name, location, content } = props;
-  const link = () => openMap.createOpenLink(location);
+  React.useEffect(
+    () => {
+      // Don't display sheet on first render
+      if (firstUpdate.current) {
+        firstUpdate.current = false;
+        return;
+      }
+
+      // displaying the sheet
+      refSheet.current.snapTo(1);
+    },
+    [ name, lastClicked ]);
+
 
   return (
     <BottomSheet
       ref={refSheet}
-      snapPoints={[ 350, 45 ]}
+      snapPoints={[ name ? 45 : 0, 350 ]}
       renderHeader={Header}
       renderContent={() => (
         <View style={styles.panel}>

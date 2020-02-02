@@ -130,14 +130,10 @@ class DynamicMap extends React.Component {
     );
   };
 
-  setActiveMarker = (data) => {
-    this.set({ activeMarker: data });
-  };
-
   renderMarker = (data) => {
     return <MapView.Marker key={data.name}
       coordinate={data.location}
-      onPress={() => this.setState({ activeMarker: data })}
+      onPress={() => this.setState({ activeMarker: { lastClicked: new Date(), ...data } })}
     />;
   };
 
@@ -168,8 +164,7 @@ class DynamicMap extends React.Component {
         {
           this.props.location && <>
             <Fab
-              direction="up"
-              position="bottomLeft"
+              position="topLeft"
               style={{ backgroundColor: '#5067FF' }}
               onPress={this.addPhoto}
             >
@@ -177,7 +172,7 @@ class DynamicMap extends React.Component {
             </Fab>
           </>
         }
-        {this.state.activeMarker && <DetailsPanel {...this.state.activeMarker} />}
+        <DetailsPanel {...this.state.activeMarker} />
       </>
     );
   }
