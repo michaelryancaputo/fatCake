@@ -16,3 +16,4 @@ export { default as MapViewPopout } from './MapViewPopout';
 export { default as ActivityIndicator } from './ActivityIndicator';
 export { default as Photo } from './Photo';
 export { default as List } from './List';
+export { default as Logo } from './Logo';

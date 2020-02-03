@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Yup from 'yup';
 
-import { AppPageContainer, Button, ErrorMessage, FormInput } from '../components';
+import { AppPageContainer, Button, ErrorMessage, FormInput, Logo } from '../components';
 
 import Firebase from '../api/firebase';
 import { Formik } from 'formik';
@@ -84,6 +84,7 @@ class Signup extends React.Component {
     } = this.state;
     return (
       <AppPageContainer heading="Sign Up">
+        <Logo />
         <Formik
           initialValues={{
             displayName: '',

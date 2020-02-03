@@ -1,10 +1,8 @@
 import * as React from 'react';
 import * as Yup from 'yup';
 
-import { Button, FormInput } from '../components';
+import { AppPageContainer, Button, ErrorMessage, FormInput, Logo } from '../components';
 
-import { AppPageContainer } from '../components';
-import ErrorMessage from '../components/ErrorMessage';
 import Firebase from '../api/firebase';
 import { Formik } from 'formik';
 
@@ -16,6 +14,8 @@ const validationSchema = Yup.object().shape({
 });
 
 class ForgotPassword extends React.Component {
+  goToLogin = () => this.props.navigation.navigate('Login');
+
   handlePasswordReset = async (values, actions) => {
     const { email } = values;
 
@@ -31,6 +31,7 @@ class ForgotPassword extends React.Component {
   render() {
     return (
       <AppPageContainer heading="Forgot Password?">
+        <Logo />
         <Formik
           initialValues={{ email: '' }}
           onSubmit={(values, actions) => {
@@ -70,6 +71,14 @@ class ForgotPassword extends React.Component {
               </>
             )}
         </Formik>
+        <Button
+          title='Have an account? Login'
+          onPress={this.goToLogin}
+          titleStyle={{
+            color: '#039BE5'
+          }}
+          type='clear'
+        />
       </AppPageContainer>
     );
   }

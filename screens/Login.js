@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Yup from 'yup';
 
-import { AppPageContainer, Button } from '../components';
+import { AppPageContainer, Button, Logo } from '../components';
 
 import ErrorMessage from '../components/ErrorMessage';
 import Firebase from '../api/firebase';
@@ -22,6 +22,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const Login = (props) => {
+
   const goToSignup = () => props.navigation.navigate('Signup');
   const goToForgotPassword = () => props.navigation.navigate('ForgotPassword');
   const navigateToApp = () => navigation.navigate('App');
@@ -55,6 +56,7 @@ const Login = (props) => {
         />
       </>}
     >
+      <Logo />
       <Formik
         initialValues={initialState}
         onSubmit={handleOnLogin}
