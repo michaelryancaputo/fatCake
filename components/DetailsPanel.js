@@ -3,33 +3,20 @@ import * as React from 'react';
 import {
   StyleSheet,
   Text,
-  TouchableWithoutFeedback,
   View
 } from 'react-native';
 
 import BottomSheet from 'reanimated-bottom-sheet';
+import Button from './Button';
+import Heading from './Heading';
+import PanelHandleHeader from './PanelHandleHeader';
 import openMap from 'react-native-open-maps';
 
-const Inner = () => (
-  <View style={styles.panel}>
-    <Text style={styles.panelTitle}>Actions Menu</Text>
-    <View style={styles.panelButton}>
-      <Text style={styles.panelButtonTitle}>Take Photo</Text>
-    </View>
-  </View>
-);
-
-const Header = () => (
-  <View style={styles.header}>
-    <View style={styles.panelHeader}>
-      <View style={styles.panelHandle} />
-    </View>
-  </View>
-);
+const defaultContent = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque finibus venenatis velit, et laoreet dolor. Sed rutrum velit quis eleifend faucibus. Nunc pellentesque rutrum dignissim. Morbi non lectus varius, mollis massa quis, tristique orci. In blandit vel ipsum eu vestibulum. Donec et feugiat dui. Quisque sit amet mi nec nulla egestas eleifend et sed erat. Phasellus hendrerit urna dui, quis ultricies magna rutrum sed. Aenean sit amet lorem quam. Quisque id porttitor tortor. Donec posuere magna vitae elit feugiat, at pellentesque velit viverra.';
 
 const ActionsPanel = (props) => {
-  const { name, location, content, lastClicked } = props;
-  // const link = () => openMap.createOpenLink(location);
+  const { name, location, content = defaultContent, lastClicked } = props;
+  const openLink = () => openMap.createOpenLink(location);
 
   const refSheet = React.useRef();
   const firstUpdate = React.useRef(true);
@@ -52,16 +39,14 @@ const ActionsPanel = (props) => {
     <BottomSheet
       ref={refSheet}
       snapPoints={[ name ? 45 : 0, 350 ]}
-      renderHeader={Header}
+      renderHeader={PanelHandleHeader}
       renderContent={() => (
         <View style={styles.panel}>
-          <Text style={styles.panelTitle}>{name}</Text>
-          {content && <View>
+          <Heading style={{ marginLeft: 0, marginBottom: 10 }}>{name}</Heading>
+          <Text style={{ marginBottom: 10 }}>
             {content}
-          </View>}
-          <View style={styles.panelButton}>
-            <Text style={styles.panelButtonTitle}>Take Photo</Text>
-          </View>
+          </Text>
+          <Button title="Visit Site" onPres={openLink} />
         </View>
       )}
     />
