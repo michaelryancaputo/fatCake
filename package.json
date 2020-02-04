@@ -40,7 +40,7 @@
     "react-native-maps": "0.26.1",
     "react-native-maps-super-cluster": "https://github.com/ballenwillis/react-native-maps-super-cluster",
     "react-native-open-maps": "^0.3.4",
-    "react-native-reanimated": "~1.7.0",
+    "react-native-reanimated": "~1.4.0",
     "react-native-screens": "2.0.0-alpha.12",
     "react-native-web": "^0.11.7",
     "react-navigation": "^4.0.10",
