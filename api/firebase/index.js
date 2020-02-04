@@ -15,6 +15,8 @@ export const eventCollectionName = 'event-photos';
 export const profileCollectionName = 'profile-photos';
 export const locationCollectionName = 'locations';
 
+const PROXIMITY_IN_KM = 0.02;
+
 class Fire {
   constructor() {
     !firebase.apps.length
@@ -93,7 +95,7 @@ class Fire {
           coords.latitude,
           coords.longitude
         ),
-        radius: 1
+        radius: PROXIMITY_IN_KM
       });
 
       const list = await ref.get().then(value => value.docs);
