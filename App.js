@@ -6,6 +6,8 @@ import MainApp from './navigation';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 
+console.disableYellowBox = true;
+
 const App = () => {
   return (
     <Provider store={store}>

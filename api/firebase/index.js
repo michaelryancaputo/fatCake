@@ -73,7 +73,7 @@ class Fire {
         profileCollectionName
       );
 
-      this.updateUser({
+      this.updateUserData({
         photoUrl
       });
 
@@ -184,11 +184,24 @@ class Fire {
       .get()
       .then(this.data);
 
-  updateUser(options) {
+  updateUserProfile(options) {
     return firebase.auth().currentUser.updateProfile({
       ...options,
       timestamp: this.timestamp
     });
+  }
+
+  updateUserData(options) {
+    const filteredOptions = _.omitBy(options, (v) => !v);
+    const db = firebase.firestore();
+
+    db.collection('users').where('uid', '==', this.uid)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          db.collection('users').doc(doc.id).update(filteredOptions);
+        });
+      });
   }
 
   deleteUser() {

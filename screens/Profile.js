@@ -100,7 +100,8 @@ class Profile extends React.Component {
     const { displayName, email, phoneNumber, photoUrl } = values;
     try {
       const options = { displayName, email, phoneNumber, photoUrl };
-      await Firebase.shared.updateUser(options);
+      await Firebase.shared.updateUserProfile(options);
+      await Firebase.shared.updateUserData(options);
     } catch (error) {
       actions.setFieldError('general', error.message);
     } finally {
@@ -133,6 +134,8 @@ class Profile extends React.Component {
             isSubmitting,
             dirty,
           }) => {
+            const selectPhoto = () => this.pickImage(handleChange('photoUrl'));
+
             return (
               <>
                 {userData.photoUrl ?
@@ -144,14 +147,14 @@ class Profile extends React.Component {
                       <Button
                         transparent
                         small
-                        onPress={() => this.pickImage(handleChange('photoUrl'))}
+                        onPress={selectPhoto}
                         title="Change your profile photo"
                       />
                     </CardItem>
                   </Card>
                   :
                   <Button
-                    onPress={() => this.pickImage(handleChange('photoUrl'))}
+                    onPress={selectPhoto}
                     title="Choose a profile photo"
                   />
                 }
@@ -174,13 +177,15 @@ class Profile extends React.Component {
                   iconName='ios-mail'
                   onBlur={handleBlur('email')}
                 />
+
+                <ErrorMessage errorValue={errors.general} />
+
                 <Button
                   title='Save'
                   onPress={handleSubmit}
                   disabled={!isValid || isSubmitting || !dirty}
                   loading={isSubmitting}
                 />
-                <ErrorMessage errorValue={errors.general} />
               </>
             );
           }}

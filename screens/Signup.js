@@ -64,7 +64,7 @@ class Signup extends React.Component {
       if (response.user.uid) {
         const { uid } = response.user;
         await Firebase.shared.createNewUser({ email, displayName, uid });
-        await Firebase.shared.updateUser({ displayName });
+        await Firebase.shared.updateUserProfile({ displayName });
         this.props.navigation.navigate('App');
       }
     } catch (error) {
