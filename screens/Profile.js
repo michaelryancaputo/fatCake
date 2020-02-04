@@ -53,11 +53,12 @@ class Profile extends React.Component {
       if (!result.cancelled && result.uri) {
         const photoUrl = await Firebase.shared.postUserPhoto(`${result.uri}`);
         handleChange(photoUrl);
-        this.setState({
+        this.setState(state => ({
           userData: {
+            ...state.userData,
             photoUrl
           }
-        });
+        }));
       }
     }
   };
