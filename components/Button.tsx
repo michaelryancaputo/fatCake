@@ -8,11 +8,14 @@ const StyledButton = styled(NativeBaseButton)`
   margin-bottom: 15;
 `;
 
-const Button = ({ title = 'Click', ...rest }) => (
+type ButtonProps = {
+  title: string;
+  onPress: Function;
+};
+
+const Button = ({ title = 'Click', ...rest }: ButtonProps) => (
   <StyledButton block {...rest}>
-    <Text>
-      {title}
-    </Text>
+    <Text>{title}</Text>
   </StyledButton>
 );
 

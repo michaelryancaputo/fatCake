@@ -1,5 +1,6 @@
+import * as React from 'react';
+
 import { ActivityIndicator } from 'react-native';
-import React from 'react';
 import styled from 'styled-components/native';
 
 const ActivityContainer = styled.View`
@@ -13,6 +14,8 @@ const ActivityContainer = styled.View`
   padding-right: 10;
 `;
 
-export default () => <ActivityContainer>
-  <ActivityIndicator size="large" color="#0000ff" />
-</ActivityContainer>;
+export default () => (
+  <ActivityContainer>
+    <ActivityIndicator size="large" color="#0000ff" />
+  </ActivityContainer>
+);
