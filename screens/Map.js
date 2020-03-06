@@ -35,10 +35,11 @@ class Map extends React.Component {
     return location &&
       location.coords &&
       location.coords.longitude &&
-      <MapView.Marker coordinate={{
-        longitude: location.coords.longitude,
-        latitude: location.coords.latitude
-      }}
+      <MapView.Marker
+        coordinate={{
+          longitude: location.coords.longitude,
+          latitude: location.coords.latitude
+        }}
         image={Pedestrian}
         width={10}
         height={10}
